@@ -25,13 +25,13 @@ public class Game extends JFrame implements Runnable {
 
         importImg();
 
-        setSize(656,678);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null); //window in center of screen
 
         gameScreen = new GameScreen(img);
         add(gameScreen);
 
+        pack();
         setVisible(true);
     }
 
