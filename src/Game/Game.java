@@ -1,5 +1,8 @@
 package Game;
 
+import inputs.MyKeyboardListener;
+import inputs.MyMouseListener;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -15,9 +18,13 @@ public class Game extends JFrame implements Runnable {
     private final double FPS_set = 120.0;
     private final double UPS_set = 60.0;
 
+    private MyMouseListener myMouseListener;
+    private MyKeyboardListener myKeyboardListener;
+
     public static void main(String[] args) {
 
         Game game = new Game();
+        game.initInputs();
         game.start();
     }
 
@@ -33,6 +40,18 @@ public class Game extends JFrame implements Runnable {
 
         pack();
         setVisible(true);
+    }
+
+    private void initInputs(){
+        myMouseListener = new MyMouseListener();
+        myKeyboardListener = new MyKeyboardListener();
+
+        addMouseListener(myMouseListener);
+        addMouseMotionListener(myMouseListener);
+
+        addKeyListener(myKeyboardListener);
+
+        requestFocus();
     }
 
     @Override
