@@ -2,6 +2,9 @@ package Game;
 
 import inputs.MyKeyboardListener;
 import inputs.MyMouseListener;
+import scenes.Menu;
+import scenes.Playing;
+import scenes.Settings;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,7 +14,6 @@ import java.io.InputStream;
 
 public class Game extends JFrame implements Runnable {
 
-    private GameScreen gameScreen;
     private BufferedImage img;
     private Thread gameThread;
 
@@ -21,6 +23,13 @@ public class Game extends JFrame implements Runnable {
     private MyMouseListener myMouseListener;
     private MyKeyboardListener myKeyboardListener;
 
+    //Classes
+    private GameScreen gameScreen;
+    private Render render;
+    private Menu menu;
+    private Playing playing;
+    private Settings settings;
+
     public static void main(String[] args) {
 
         Game game = new Game();
@@ -29,17 +38,22 @@ public class Game extends JFrame implements Runnable {
     }
 
     public Game(){
-
-        importImg();
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null); //window in center of screen
 
-        gameScreen = new GameScreen(img);
+        initClasses();
         add(gameScreen);
 
         pack();
         setVisible(true);
+    }
+
+    private void initClasses() {
+        render = new Render(this);
+        gameScreen = new GameScreen(this);
+        menu = new Menu(this);
+        playing = new Playing(this);
+        settings = new Settings(this);
     }
 
     private void initInputs(){
@@ -104,13 +118,21 @@ public class Game extends JFrame implements Runnable {
         gameThread.start();
     }
 
-    private void importImg() {
-        InputStream is = getClass().getResourceAsStream("/spriteatlas.png");
 
-        try {
-            img = ImageIO.read(is);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+    //Getters and setters
+    public Render getRender(){
+        return render;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public Playing getPlaying() {
+        return playing;
+    }
+
+    public Settings getSettings() {
+        return settings;
     }
 }

@@ -7,7 +7,10 @@ import java.awt.event.MouseMotionListener;
 public class MyMouseListener implements MouseListener, MouseMotionListener {
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        if(e.getButton() == MouseEvent.BUTTON1)
+            System.out.println("Left clicked");
+        else if(e.getButton() == MouseEvent.BUTTON3)
+            System.out.println("Right clicked");
     }
 
     @Override
