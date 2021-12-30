@@ -48,18 +48,21 @@ public class Game extends JFrame implements Runnable {
         int frames = 0;
         int updates = 0;
 
+        long now;
+
         while (true){
+            now = System.nanoTime();
             //Render
-            if(System.nanoTime() - lastFrame >= timePerFrame){
+            if(now - lastFrame >= timePerFrame){
                 repaint();
-                lastFrame = System.nanoTime();
+                lastFrame = now;
                 frames++;
             }
 
             //Update
-            if(System.nanoTime() - lastUpdate >= timePerUpdate){
+            if(now - lastUpdate >= timePerUpdate){
                 updateGame();
-                lastUpdate = System.nanoTime();
+                lastUpdate = now;
                 updates++;
             }
 
