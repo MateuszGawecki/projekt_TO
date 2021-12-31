@@ -1,6 +1,7 @@
 package scenes;
 
 import Game.Game;
+import helpz.LoadSave;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
