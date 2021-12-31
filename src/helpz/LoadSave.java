@@ -2,8 +2,9 @@ package helpz;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class LoadSave {
 
@@ -19,5 +20,79 @@ public class LoadSave {
         }
 
         return img;
+    }
+
+    public static void CreateFile(){
+        File txtFile = new File("res/testTextFile.txt");
+
+        try {
+            txtFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void CreateLevel(String name, int[] idArr){
+        File newLevel = new File("res/" + name + ".txt");
+
+        if(newLevel.exists()){
+            System.out.println("File " + name + "already exists");
+            return;
+        }else {
+            try {
+                newLevel.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            WriteToFile(newLevel, idArr);
+        }
+    }
+
+    private static void WriteToFile( File f, int [] idArr){
+
+        try {
+            PrintWriter pw = new PrintWriter(f);
+
+            for(int i : idArr){
+                pw.println(i);
+            }
+
+            pw.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int[][] getLevelData(String name){
+        File lvlFile = new File("res/" + name + ".txt");
+
+        if(lvlFile.exists()){
+            ArrayList<Integer> list = ReadFromFile(lvlFile);
+            return Utilz.ArrayListTo2Dint(list,20,20);
+
+        }else{
+            System.out.println("File "+ name +" does not exists");
+            return null;
+        }
+    }
+
+    private static ArrayList<Integer> ReadFromFile(File file){
+        ArrayList<Integer> list = new ArrayList<>();
+
+        try {
+            Scanner sc = new Scanner(file);
+            while (sc.hasNextLine()){
+                list.add(Integer.parseInt(sc.nextLine()));
+            }
+            sc.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 }

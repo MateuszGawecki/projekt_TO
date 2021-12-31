@@ -2,6 +2,7 @@ package scenes;
 
 import Game.Game;
 import helpz.LevelBuilder;
+import helpz.LoadSave;
 import managers.TileManager;
 import objects.Tile;
 import ui.BottomBar;
@@ -32,8 +33,25 @@ public class Playing extends GameScene implements SceneMethods{
         tileManager = new TileManager();
         bottomBar = new BottomBar(0,640, 640,100, this);
 
-        //Tle lvl
-        //tilemanager
+        //LoadSave.CreateFile();
+        //LoadSave.WriteToFile();
+        //LoadSave.ReadFromFile();
+
+        createDefaultLevel();
+        loadDefaultLevel();
+    }
+
+    private void loadDefaultLevel() {
+        lvl = LoadSave.getLevelData("new level");
+    }
+
+    private void createDefaultLevel() {
+        int[] arr = new int[400];
+
+        for(int i=0; i<arr.length; i++)
+            arr[i] = 0;
+
+        LoadSave.CreateLevel("new level",arr);
     }
 
     public TileManager getTileManager(){
