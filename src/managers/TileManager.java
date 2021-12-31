@@ -17,6 +17,10 @@ public class TileManager {
         createTiles();
     }
 
+    public Tile getTile(int id){
+        return tiles.get(id);
+    }
+
 
     private void createTiles(){
         int id = 0;
