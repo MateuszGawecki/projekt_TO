@@ -2,6 +2,7 @@ package Game;
 
 import inputs.MyKeyboardListener;
 import inputs.MyMouseListener;
+import scenes.Editing;
 import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;
@@ -26,6 +27,7 @@ public class Game extends JFrame implements Runnable {
     private Menu menu;
     private Playing playing;
     private Settings settings;
+    private Editing editing;
 
     public static void main(String[] args) {
 
@@ -52,6 +54,7 @@ public class Game extends JFrame implements Runnable {
         menu = new Menu(this);
         playing = new Playing(this);
         settings = new Settings(this);
+        editing = new Editing(this);
     }
 
     @Override
@@ -120,5 +123,9 @@ public class Game extends JFrame implements Runnable {
 
     public Settings getSettings() {
         return settings;
+    }
+
+    public Editing getEditing(){
+        return editing;
     }
 }

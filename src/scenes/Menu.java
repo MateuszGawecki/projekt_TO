@@ -14,15 +14,10 @@ import static Game.GameStates.*;
 
 public class Menu extends GameScene implements SceneMethods{
 
-    private BufferedImage img;
-    private ArrayList<BufferedImage> sprites = new ArrayList<>();
-
-    private MyButton bPlaying, bSettings, bQuit;
+    private MyButton bPlaying, bSettings, bQuit, bEditing;
 
     public Menu(Game game) {
         super(game);
-        importImg();
-        loadSprites();
         initButtons();
     }
 
@@ -34,8 +29,9 @@ public class Menu extends GameScene implements SceneMethods{
         int yOffset = 100;
 
         bPlaying = new MyButton("Play", x,y,w,h);
-        bSettings = new MyButton("Settings", x,y + yOffset,w,h);
-        bQuit = new MyButton("Quit", x,y + yOffset * 2,w,h);
+        bEditing = new MyButton("Editing", x,y + yOffset,w,h);
+        bSettings = new MyButton("Settings", x,y + yOffset *2,w,h);
+        bQuit = new MyButton("Quit", x,y + yOffset * 3,w,h);
     }
 
     @Override
@@ -45,8 +41,10 @@ public class Menu extends GameScene implements SceneMethods{
 
     @Override
     public void mouseClicked(int x, int y) {
-        if(bPlaying.getBounds().contains(x,y)){
+        if(bPlaying.getBounds().contains(x,y)) {
             setGameState(PLAYING);
+        } else if(bEditing.getBounds().contains(x,y)){
+            setGameState(EDITING);
         } else if(bSettings.getBounds().contains(x,y)){
             setGameState(SETTINGS);
         } else if(bQuit.getBounds().contains(x, y)){
@@ -57,11 +55,14 @@ public class Menu extends GameScene implements SceneMethods{
     @Override
     public void mouseMoved(int x, int y) {
         bPlaying.setMouseOver(false);
+        bEditing.setMouseOver(false);
         bSettings.setMouseOver(false);
         bQuit.setMouseOver(false);
 
-        if(bPlaying.getBounds().contains(x,y)){
+        if(bPlaying.getBounds().contains(x,y)) {
             bPlaying.setMouseOver(true);
+        } else if(bEditing.getBounds().contains(x,y)){
+            bEditing.setMouseOver(true);
         } else if(bSettings.getBounds().contains(x, y)){
             bSettings.setMouseOver(true);
         } else if(bQuit.getBounds().contains(x, y)){
@@ -72,8 +73,10 @@ public class Menu extends GameScene implements SceneMethods{
     @Override
     public void mousePressed(int x, int y) {
 
-        if(bPlaying.getBounds().contains(x,y)){
+        if(bPlaying.getBounds().contains(x,y)) {
             bPlaying.setMousePressed(true);
+        } else if(bEditing.getBounds().contains(x,y)){
+            bEditing.setMousePressed(true);
         } else if(bSettings.getBounds().contains(x, y)){
             bSettings.setMousePressed(true);
         } else if(bQuit.getBounds().contains(x, y)){
@@ -93,31 +96,15 @@ public class Menu extends GameScene implements SceneMethods{
 
     private void resetButtons() {
         bPlaying.resetBooleans();
+        bEditing.resetBooleans();
         bSettings.resetBooleans();
         bQuit.resetBooleans();
     }
 
     private void drawButtons(Graphics g){
         bPlaying.draw(g);
+        bEditing.draw(g);
         bSettings.draw(g);
         bQuit.draw(g);
-    }
-
-    private void loadSprites(){
-        for(int y=0; y<10; y++){
-            for(int x=0; x<10; x++){
-                sprites.add(img.getSubimage(x*32,y*32,32,32));
-            }
-        }
-    }
-
-    private void importImg() {
-        InputStream is = getClass().getResourceAsStream("/spriteatlas.png");
-
-        try {
-            img = ImageIO.read(is);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
     }
 }
