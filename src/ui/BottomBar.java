@@ -71,7 +71,7 @@ public class BottomBar {
 
     private void drawTileButtons(Graphics g) {
         for(MyButton b: tileButtons){
-            g.drawImage(getButtImgb(b.getId()),b.getX(),b.getY(),b.getWidth(),b.getHeight(),null);
+            g.drawImage(getButtImg(b.getId()),b.getX(),b.getY(),b.getWidth(),b.getHeight(),null);
 
             //Mouseover
             if(b.isMouseOver()){
@@ -91,7 +91,7 @@ public class BottomBar {
         }
     }
 
-    private BufferedImage getButtImgb(int id) {
+    private BufferedImage getButtImg(int id) {
         return playing.getTileManager().getSprite(id);
     }
 
@@ -103,6 +103,7 @@ public class BottomBar {
             for(MyButton b : tileButtons){
                 if(b.getBounds().contains(x,y)){
                     selectedTile = playing.getTileManager().getTile(b.getId());
+                    playing.setSelectedTile(selectedTile);
                     return;
                 }
             }
