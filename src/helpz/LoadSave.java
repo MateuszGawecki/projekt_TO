@@ -95,4 +95,15 @@ public class LoadSave {
 
         return list;
     }
+
+    public static void SaveLevel(String name, int[][] idArr){
+        File lvlFile = new File("res/" + name + ".txt");
+
+        if(lvlFile.exists()){
+            WriteToFile(lvlFile, Utilz.TwoDto1DArr(idArr));
+        }else {
+            System.out.println("File "+ name + "does not exist");
+            return;
+        }
+    }
 }
