@@ -108,4 +108,12 @@ public class MyButton {
     public int getHeight() {
         return height;
     }
+
+    public boolean isMouseOver() {
+        return mouseOver;
+    }
+
+    public boolean isMousePressed() {
+        return mousePressed;
+    }
 }

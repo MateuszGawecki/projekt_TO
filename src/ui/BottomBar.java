@@ -60,6 +60,22 @@ public class BottomBar {
     private void drawTileButtons(Graphics g) {
         for(MyButton b: tileButtons){
             g.drawImage(getButtImgb(b.getId()),b.getX(),b.getY(),b.getWidth(),b.getHeight(),null);
+
+            //Mouseover
+            if(b.isMouseOver()){
+                g.setColor(Color.WHITE);
+            }else{
+                g.setColor(Color.BLACK);
+            }
+
+            //Border
+            g.drawRect(b.getX(),b.getY(), b.getWidth(), b.getHeight());
+
+            if(b.isMousePressed()){
+                //MousePressed
+                g.drawRect(b.getX()+1,b.getY()+1, b.getWidth()-2, b.getHeight()-2);
+                g.drawRect(b.getX()+2,b.getY()+2, b.getWidth()-4, b.getHeight()-4);
+            }
         }
     }
 
@@ -76,18 +92,41 @@ public class BottomBar {
 
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
+        for(MyButton b : tileButtons) {
+            b.setMouseOver(false);
+        }
+
         if (bMenu.getBounds().contains(x, y))
             bMenu.setMouseOver(true);
+        else{
+            for(MyButton b : tileButtons){
+                if(b.getBounds().contains(x,y)){
+                    b.setMouseOver(true);
+                    return;
+                }
+            }
+        }
     }
-
 
     public void mousePressed(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
             bMenu.setMousePressed(true);
+        else{
+            for(MyButton b : tileButtons){
+                if(b.getBounds().contains(x,y)){
+                    b.setMousePressed(true);
+                    return;
+                }
+            }
+        }
     }
 
 
     public void mouseReleased(int x, int y) {
         bMenu.resetBooleans();
+
+        for(MyButton b: tileButtons){
+            b.resetBooleans();
+        }
     }
 }
