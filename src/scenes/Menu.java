@@ -1,7 +1,6 @@
 package scenes;
 
 import Game.Game;
-import helpz.LoadSave;
 import ui.MyButton;
 
 import javax.imageio.ImageIO;
@@ -10,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Random;
 
 import static Game.GameStates.*;
 
@@ -18,7 +16,6 @@ public class Menu extends GameScene implements SceneMethods{
 
     private BufferedImage img;
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
-    private Random random;
 
     private MyButton bPlaying, bSettings, bQuit;
 
@@ -27,8 +24,6 @@ public class Menu extends GameScene implements SceneMethods{
         importImg();
         loadSprites();
         initButtons();
-        random = new Random();
-
     }
 
     private void initButtons(){
@@ -52,14 +47,25 @@ public class Menu extends GameScene implements SceneMethods{
     public void mouseClicked(int x, int y) {
         if(bPlaying.getBounds().contains(x,y)){
             setGameState(PLAYING);
+        } else if(bSettings.getBounds().contains(x,y)){
+            setGameState(SETTINGS);
+        } else if(bQuit.getBounds().contains(x, y)){
+            System.exit(0);
         }
     }
 
     @Override
     public void mouseMoved(int x, int y) {
         bPlaying.setMouseOver(false);
+        bSettings.setMouseOver(false);
+        bQuit.setMouseOver(false);
+
         if(bPlaying.getBounds().contains(x,y)){
             bPlaying.setMouseOver(true);
+        } else if(bSettings.getBounds().contains(x, y)){
+            bSettings.setMouseOver(true);
+        } else if(bQuit.getBounds().contains(x, y)){
+            bQuit.setMouseOver(true);
         }
     }
 
@@ -68,6 +74,10 @@ public class Menu extends GameScene implements SceneMethods{
 
         if(bPlaying.getBounds().contains(x,y)){
             bPlaying.setMousePressed(true);
+        } else if(bSettings.getBounds().contains(x, y)){
+            bSettings.setMousePressed(true);
+        } else if(bQuit.getBounds().contains(x, y)){
+            bQuit.setMousePressed(true);
         }
     }
 
@@ -94,10 +104,6 @@ public class Menu extends GameScene implements SceneMethods{
                 sprites.add(img.getSubimage(x*32,y*32,32,32));
             }
         }
-    }
-
-    private int getRandomInt() {
-        return random.nextInt(100);
     }
 
     private void importImg() {
