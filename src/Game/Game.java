@@ -1,7 +1,9 @@
 package Game;
 
+import helpz.LoadSave;
 import inputs.MyKeyboardListener;
 import inputs.MyMouseListener;
+import managers.TileManager;
 import scenes.Editing;
 import scenes.Menu;
 import scenes.Playing;
@@ -29,6 +31,8 @@ public class Game extends JFrame implements Runnable {
     private Settings settings;
     private Editing editing;
 
+    private TileManager tileManager;
+
     public static void main(String[] args) {
 
         Game game = new Game();
@@ -42,13 +46,24 @@ public class Game extends JFrame implements Runnable {
         setResizable(false);
 
         initClasses();
+        createDefaultLevel();
         add(gameScreen);
 
         pack();
         setVisible(true);
     }
 
+    private void createDefaultLevel() {
+        int[] arr = new int[400];
+
+        for(int i=0; i<arr.length; i++)
+            arr[i] = 0;
+
+        LoadSave.CreateLevel("new level",arr);
+    }
+
     private void initClasses() {
+        tileManager = new TileManager();
         render = new Render(this);
         gameScreen = new GameScreen(this);
         menu = new Menu(this);
@@ -127,5 +142,9 @@ public class Game extends JFrame implements Runnable {
 
     public Editing getEditing(){
         return editing;
+    }
+
+    public TileManager getTileManager() {
+        return tileManager;
     }
 }
