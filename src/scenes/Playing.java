@@ -21,10 +21,14 @@ public class Playing extends GameScene implements SceneMethods{
 
         lvl = LevelBuilder.getLevelData();
         tileManager = new TileManager();
-        bottomBar = new BottomBar(0,640, 640,100);
+        bottomBar = new BottomBar(0,640, 640,100, this);
 
         //Tle lvl
         //tilemanager
+    }
+
+    public TileManager getTileManager(){
+        return tileManager;
     }
 
     @Override
