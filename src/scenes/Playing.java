@@ -2,6 +2,7 @@ package scenes;
 
 import Game.Game;
 import helpz.LoadSave;
+import managers.EnemyManager;
 import ui.ActionBar;
 
 import java.awt.*;
@@ -14,11 +15,15 @@ public class Playing extends GameScene implements SceneMethods{
 
     private int mouseX, mouseY;
 
+    private EnemyManager enemyManager;
+
     public Playing(Game game) {
         super(game);
 
         loadDefaultLevel();
         bottomBar = new ActionBar(0,640, 640,100, this);
+
+        enemyManager = new EnemyManager(this);
     }
 
     private void loadDefaultLevel() {
@@ -30,6 +35,11 @@ public class Playing extends GameScene implements SceneMethods{
 
         drawLevel(g);
         bottomBar.draw(g);
+        enemyManager.draw(g);
+    }
+
+    public void update(){
+        enemyManager.update();
     }
 
     private void drawLevel(Graphics g){
@@ -54,6 +64,8 @@ public class Playing extends GameScene implements SceneMethods{
         if(y>=640) {
             bottomBar.mouseClicked(x, y);
         }
+        else
+            enemyManager.addEnemy(x,y);
     }
 
     @Override
