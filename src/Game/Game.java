@@ -123,6 +123,7 @@ public class Game extends JFrame implements Runnable {
             case SETTINGS:
                 break;
             case EDITING:
+                editing.update();
                 break;
             default:
                 break;
