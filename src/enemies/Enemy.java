@@ -4,7 +4,7 @@ import java.awt.*;
 
 import static helpz.Constants.Direction.*;
 
-public class Enemy {
+public abstract class Enemy {
 
     private float x, y;
     private Rectangle bounds;
@@ -19,7 +19,7 @@ public class Enemy {
         this.Id = Id;
         this.enemyType = enemyType;
         this.bounds = new Rectangle((int) x, (int) y, 32, 32);
-        lastDir = RIGHT;
+        lastDir = -1;
     }
 
     public void setPos(int x, int y){

@@ -2,6 +2,7 @@ package scenes;
 
 import Game.Game;
 import helpz.LoadSave;
+import objects.PathPoint;
 import objects.Tile;
 import ui.ActionBar;
 import ui.ToolBar;
@@ -9,11 +10,16 @@ import ui.ToolBar;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import static helpz.Constants.Tiles.*;
 
 public class Editing extends GameScene implements SceneMethods{
 
     private int[][] lvl;
     private ToolBar toolBar;
+
+    private PathPoint start,end;
 
     private Tile selectedTile;
 
@@ -25,12 +31,15 @@ public class Editing extends GameScene implements SceneMethods{
 
     public Editing(Game game) {
         super(game);
-        toolBar = new ToolBar(0,640, 640,100, this);
+        toolBar = new ToolBar(0,640, 640,160, this);
         loadDefaultLevel();
     }
 
     private void loadDefaultLevel() {
         lvl = LoadSave.getLevelData("new level");
+        ArrayList<PathPoint> points = LoadSave.getLevelPathPoints("new level");
+        start = points.get(0);
+        end = points.get(1);
     }
 
     private void drawSelectedTile(Graphics g) {
@@ -49,19 +58,31 @@ public class Editing extends GameScene implements SceneMethods{
             int tileX = x/32;
             int tileY = y/32;
 
-            if(lastTileX == tileX && lastTileY == tileY && lastTileID == selectedTile.getId())
-                return;
+            if(selectedTile.getId() >= 0){
 
-            lastTileX = tileX;
-            lastTileY = tileY;
-            lastTileID = selectedTile.getId();
+                if(lastTileX == tileX && lastTileY == tileY && lastTileID == selectedTile.getId())
+                    return;
 
-            lvl[tileY][tileX] = selectedTile.getId();
+                lastTileX = tileX;
+                lastTileY = tileY;
+                lastTileID = selectedTile.getId();
+
+                lvl[tileY][tileX] = selectedTile.getId();
+            }else {
+                int id = lvl[tileY][tileX];
+                if(getGame().getTileManager().getTile(id).getTileType() == ROAD_TIlE){
+                    if(selectedTile.getId() == -1){
+                        start = new PathPoint(tileX,tileY);
+                    }else {
+                        end = new PathPoint(tileX,tileY);
+                    }
+                }
+            }
         }
     }
 
     public void saveLevel(){
-        LoadSave.SaveLevel("new level", lvl);
+        LoadSave.SaveLevel("new level", lvl, start,end);
         getGame().getPlaying().setLevel(lvl);
     }
 
@@ -71,7 +92,17 @@ public class Editing extends GameScene implements SceneMethods{
         drawLevel(g);
         toolBar.draw(g);
         drawSelectedTile(g);
+        drawPathPoints(g);
+    }
 
+    private void drawPathPoints(Graphics g) {
+        if(start !=null){
+            g.drawImage(toolBar.getStartPathImg(),start.getxCord()*32, start.getyCord()*32,32,32,null);
+        }
+
+        if(end !=null){
+            g.drawImage(toolBar.getEndPathImg(),end.getxCord()*32, end.getyCord()*32,32,32,null);
+        }
     }
 
     public void update(){

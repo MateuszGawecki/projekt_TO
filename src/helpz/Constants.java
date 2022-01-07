@@ -14,4 +14,11 @@ public class Constants {
         public static final int GRASS_TILE = 1;
         public static final int ROAD_TIlE = 2;
     }
+
+    public static class Enemies{
+        public static final int ORC = 0;
+        public static final int BAT = 1;
+        public static final int KNIGHT = 2;
+        public static final int WOLF = 3;
+    }
 }
