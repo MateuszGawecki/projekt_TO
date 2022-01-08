@@ -60,6 +60,13 @@ public abstract class Enemy {
             default:
                 break;
         }
+        
+        updateHitBox();
+    }
+
+    private void updateHitBox() {
+        bounds.x = (int) x;
+        bounds.y = (int) y;
     }
 
     public float getX() {

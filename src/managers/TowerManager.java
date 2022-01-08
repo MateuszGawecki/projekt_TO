@@ -42,17 +42,21 @@ public class TowerManager {
     }
 
     public void update() {
-        attackEnemyIfClose();
+        for (Tower t : towers){
+            t.update();
+            attackEnemyIfClose(t);
+        }
     }
 
-    private void attackEnemyIfClose() {
-        for (Tower t : towers){
-            for(Enemy e : playing.getEnemyManager().getEnemies()){
-                if(e.isAlive())
-                    if(isEnemyInRange(e,t)){
-                        e.hurt(1);
+    private void attackEnemyIfClose(Tower t) {
+        for(Enemy e : playing.getEnemyManager().getEnemies()){
+            if(e.isAlive())
+                if(isEnemyInRange(e,t)){
+                    if(t.isCooldownOver()) {
+                        playing.shootEnemy(e, t);
+                        t.resetCooldown();
                     }
-            }
+                }
         }
     }
 

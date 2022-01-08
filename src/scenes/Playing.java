@@ -1,10 +1,13 @@
 package scenes;
 
 import Game.Game;
+import enemies.Enemy;
 import helpz.LoadSave;
 import managers.EnemyManager;
+import managers.ProjectileManager;
 import managers.TowerManager;
 import objects.PathPoint;
+import objects.Projectile;
 import objects.Tower;
 import ui.ActionBar;
 
@@ -24,6 +27,7 @@ public class Playing extends GameScene implements SceneMethods{
 
     private EnemyManager enemyManager;
     private TowerManager towerManager;
+    private ProjectileManager projectileManager;
 
     private Tower selectedTower;
 
@@ -35,6 +39,7 @@ public class Playing extends GameScene implements SceneMethods{
 
         enemyManager = new EnemyManager(this,start,end);
         towerManager = new TowerManager(this);
+        projectileManager = new ProjectileManager(this);
     }
 
     private void loadDefaultLevel() {
@@ -51,8 +56,10 @@ public class Playing extends GameScene implements SceneMethods{
         actionBar.draw(g);
         enemyManager.draw(g);
         towerManager.draw(g);
+        projectileManager.draw(g);
         drawSelectedTower(g);
         drawHighLight(g);
+
     }
 
     private void drawHighLight(Graphics g) {
@@ -69,6 +76,7 @@ public class Playing extends GameScene implements SceneMethods{
         updateTick();
         enemyManager.update();
         towerManager.update();
+        projectileManager.update();
     }
 
     private void drawLevel(Graphics g){
@@ -176,5 +184,9 @@ public class Playing extends GameScene implements SceneMethods{
 
     public EnemyManager getEnemyManager() {
         return enemyManager;
+    }
+
+    public void shootEnemy(Enemy e, Tower t) {
+        projectileManager.newProjectile(t,e);
     }
 }
