@@ -73,11 +73,11 @@ public class Constants {
         public static int GetStartDmg(int towerType){
             switch (towerType){
                 case CANNON:
-                    return 25;
+                    return 15;
                 case ARCHER:
-                    return 50;
-                case WIZARD:
                     return 5;
+                case WIZARD:
+                    return 0;
                 default:
                     return 0;
             }
@@ -99,11 +99,11 @@ public class Constants {
         public static float GetDefaultCooldown(int towerType){
             switch (towerType){
                 case CANNON:
-                    return 10;
+                    return 120;
                 case ARCHER:
-                    return 10;
+                    return 25;
                 case WIZARD:
-                    return 10;
+                    return 40;
                 default:
                     return 0;
             }
@@ -112,17 +112,17 @@ public class Constants {
 
     public static class Projectiles{
         public static final int ARROW = 0;
-        public static final int BOMB = 1;
-        public static final int CHAINS = 2;
+        public static final int CHAINS= 1;
+        public static final int BOMB = 2;
 
         public static float GetSpeed(int type){
             switch (type){
                 case ARROW:
-                    return 3f;
+                    return 8f;
                 case BOMB:
-                    return 1f;
+                    return 4f;
                 case CHAINS:
-                    return 2f;
+                    return 6f;
                 default:
                     return 0f;
             }

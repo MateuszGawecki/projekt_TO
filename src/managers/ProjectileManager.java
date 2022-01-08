@@ -8,6 +8,7 @@ import objects.Tower;
 import scenes.Playing;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -17,7 +18,8 @@ import static helpz.Constants.Towers.*;
 public class ProjectileManager {
     private Playing playing;
     private ArrayList<Projectile> projectiles = new ArrayList<>();
-    private BufferedImage[] proj_img;
+    private ArrayList<Explosion> explosions = new ArrayList<>();
+    private BufferedImage[] proj_img, explo_imgs;
     private int  projectileId = 0;
 
     public ProjectileManager(Playing playing) {
@@ -30,6 +32,15 @@ public class ProjectileManager {
 
         for(int i=0; i<3;i++){
             proj_img[i] = atlas.getSubimage((7+i) * 32, 32,32,32);
+        }
+        importExploson(atlas);
+    }
+
+    private void importExploson(BufferedImage atlas) {
+        explo_imgs = new BufferedImage[7];
+
+        for(int i=0; i< 7; i++){
+            explo_imgs[i] = atlas.getSubimage(i*32, 32 * 2,32,32);
         }
     }
 
@@ -50,11 +61,16 @@ public class ProjectileManager {
         if(t.getY() > e.getY())
             ySpeed *= -1;
 
-        float arcValue = (float) Math.atan(yDist /(float) xDist);
-        float rotate = (float) Math.toDegrees(arcValue);
+        float rotate = 0;
 
-        if(xDist < 0)
-            rotate +=180;
+        if(type == ARROW){
+            float arcValue = (float) Math.atan(yDist /(float) xDist);
+            rotate = (float) Math.toDegrees(arcValue);
+
+            if(xDist < 0)
+                rotate +=180;
+        }
+
 
         projectiles.add(new Projectile(t.getX() + 16 , t.getY() + 16, xSpeed, ySpeed,t.getDmg(),rotate, projectileId++, type));
     }
@@ -78,6 +94,32 @@ public class ProjectileManager {
                 p.move();
                 if(isProjHittingEnemy(p)){
                     p.setActive(false);
+                    if(p.getProjectileType() == BOMB){
+                        explosions.add(new Explosion(p.getPos()));
+                        explodeOnEnemy(p);
+                    }
+                }
+            }
+        }
+
+        for(Explosion e:explosions){
+            if(e.getExploIndex() < 7)
+                e.update();
+        }
+    }
+
+    private void explodeOnEnemy(Projectile p) {
+        for(Enemy e : playing.getEnemyManager().getEnemies()){
+            if(e.isAlive()){
+                float radius = 40.0f;
+
+                float xDist = Math.abs(p.getPos().x - e.getX());
+                float yDist = Math.abs(p.getPos().y - e.getY());
+
+                float realDist = (float) Math.hypot(xDist,yDist);
+
+                if(realDist <= radius){
+                    e.hurt(p.getDmg());
                 }
             }
         }
@@ -85,9 +127,11 @@ public class ProjectileManager {
 
     private boolean isProjHittingEnemy(Projectile p) {
         for(Enemy e : playing.getEnemyManager().getEnemies()){
-            if(e.getBounds().contains(p.getPos())){
-                e.hurt(p.getDmg());
-                return true;
+            if(e.isAlive()){
+                if(e.getBounds().contains(p.getPos())){
+                    e.hurt(p.getDmg());
+                    return true;
+                }
             }
         }
         return false;
@@ -99,12 +143,51 @@ public class ProjectileManager {
 
         for(Projectile p : projectiles){
             if(p.isActive()) {
-                g2d.translate(p.getPos().x, p.getPos().y);
-                g2d.rotate(Math.toRadians(90));
-                g2d.drawImage(proj_img[p.getProjectileType()],-16, -16, null);
-                g2d.rotate(-Math.toRadians(90));
-                g2d.translate(-p.getPos().x, -p.getPos().y);
+                if(p.getProjectileType() == ARROW){
+                    g2d.translate(p.getPos().x, p.getPos().y);
+                    g2d.rotate(Math.toRadians(90));
+                    g2d.drawImage(proj_img[p.getProjectileType()],-16, -16, null);
+                    g2d.rotate(-Math.toRadians(90));
+                    g2d.translate(-p.getPos().x, -p.getPos().y);
+                }else {
+                    g2d.drawImage(proj_img[p.getProjectileType()], (int) p.getPos().x -16, (int) p.getPos().y -16, null);
+                }
+
             }
+        }
+
+        drawExplosions(g2d);
+    }
+
+    private void drawExplosions(Graphics2D g2d) {
+        for (Explosion e : explosions){
+            if(e.getExploIndex() < 7 ){
+                g2d.drawImage(explo_imgs[e.getExploIndex()], (int) e.getPos().x -16,(int) e.getPos().y -16, null);
+            }
+        }
+    }
+
+    public class Explosion{
+        private Point2D.Float pos;
+        private int exploTick, exploIndex;
+        public Explosion(Point2D.Float pos){
+            this.pos = pos;
+        }
+
+        public void update(){
+                exploTick++;
+                if(exploTick>=12){
+                    exploTick = 0;
+                    exploIndex++;
+                }
+        }
+
+        public Point2D.Float getPos(){
+            return pos;
+        }
+
+        public int getExploIndex(){
+            return exploIndex;
         }
     }
 }
