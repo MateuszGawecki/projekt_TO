@@ -9,6 +9,8 @@ import static helpz.Constants.Direction.*;
 public abstract class Enemy {
 
     protected float x, y;
+    protected int slowTickLimit = 120;
+    protected int slowTick = slowTickLimit;
     private Rectangle bounds;
     private int health;
     private int maxHealth;
@@ -44,6 +46,12 @@ public abstract class Enemy {
 
     public void move(float speed, int dir){
         lastDir = dir;
+
+        if(slowTick <  slowTickLimit){
+            slowTick++;
+            speed *= 0.5f;
+        }
+
         switch (dir){
             case LEFT:
                 this.x -=speed;
@@ -109,5 +117,13 @@ public abstract class Enemy {
 
     public boolean isAlive(){
         return alive;
+    }
+
+    public void slow() {
+        slowTick = 0;
+    }
+
+    public boolean isSlowed(){
+        return slowTick < slowTickLimit;
     }
 }

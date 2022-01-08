@@ -179,7 +179,14 @@ public class EnemyManager {
             if(e.isAlive()){
                 drawEnemy(g,e);
                 drawHealthBar(g,e);
+                drawEffects(g,e);
             }
+        }
+    }
+
+    private void drawEffects(Graphics g, Enemy e) {
+        if(e.isSlowed()){
+
         }
     }
 
