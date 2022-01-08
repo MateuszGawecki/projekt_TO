@@ -1,6 +1,9 @@
 package managers;
 
+import enemies.Enemy;
+import helpz.Constants;
 import helpz.LoadSave;
+import helpz.Utilz;
 import objects.Tower;
 import scenes.Playing;
 
@@ -39,6 +42,24 @@ public class TowerManager {
     }
 
     public void update() {
+        attackEnemyIfClose();
+    }
+
+    private void attackEnemyIfClose() {
+        for (Tower t : towers){
+            for(Enemy e : playing.getEnemyManager().getEnemies()){
+                if(e.isAlive())
+                    if(isEnemyInRange(e,t)){
+                        e.hurt(1);
+                    }
+            }
+        }
+    }
+
+    private boolean isEnemyInRange(Enemy e, Tower t) {
+        int range = Utilz.GetHypoDistance(t.getX(),t.getY(),e.getX(),e.getY());
+
+        return range < t.getRange();
     }
 
     public BufferedImage[] getTowerImgs(){

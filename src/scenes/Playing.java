@@ -173,4 +173,8 @@ public class Playing extends GameScene implements SceneMethods{
     public void setSelectedTower(Tower selectedTower) {
         this.selectedTower = selectedTower;
     }
+
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
+    }
 }

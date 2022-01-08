@@ -15,6 +15,7 @@ public abstract class Enemy {
     private int Id;
     private int enemyType;
     private int lastDir;
+    private boolean alive = true;
 
     public Enemy(float x, float y,int Id, int enemyType) {
         this.x = x;
@@ -91,5 +92,15 @@ public abstract class Enemy {
 
     public int getLastDir() {
         return lastDir;
+    }
+
+    public void hurt(int dmg) {
+        this.health-=dmg;
+        if(health <= 0)
+            alive = false;
+    }
+
+    public boolean isAlive(){
+        return alive;
     }
 }

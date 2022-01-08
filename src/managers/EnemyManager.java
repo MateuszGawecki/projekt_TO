@@ -43,8 +43,8 @@ public class EnemyManager {
 
     public void update(){
         for(Enemy e : enemies){
-            //is next tile road(pos,dir)
-            updateEnemyMove(e);
+            if(e.isAlive())
+                updateEnemyMove(e);
         }
     }
 
@@ -176,14 +176,16 @@ public class EnemyManager {
 
     public void draw(Graphics g){
         for(Enemy e: enemies){
-            drawEnemy(g,e);
-            drawHealthBar(g,e);
+            if(e.isAlive()){
+                drawEnemy(g,e);
+                drawHealthBar(g,e);
+            }
         }
     }
 
     private void drawHealthBar(Graphics g, Enemy e) {
         g.setColor(Color.RED);
-        g.fillRect((int)e.getX() + 16 - (getNewBarWidth(e)/2),(int)e.getY() - 10,HpBarWidth,3);
+        g.fillRect((int)e.getX() + 16 - (getNewBarWidth(e)/2),(int)e.getY() - 10,getNewBarWidth(e),3);
     }
 
     private int getNewBarWidth(Enemy e){
@@ -192,5 +194,9 @@ public class EnemyManager {
 
     private void drawEnemy(Graphics g, Enemy enemy) {
         g.drawImage(enemyImgs[enemy.getEnemyType()], (int) enemy.getX(), (int) enemy.getY(),null );
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 }
