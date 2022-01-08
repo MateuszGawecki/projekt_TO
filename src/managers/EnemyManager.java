@@ -20,6 +20,7 @@ public class EnemyManager {
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private PathPoint start, end;
     private int HpBarWidth = 20;
+    private BufferedImage slowEffect;
 
     public EnemyManager(Playing playing, PathPoint start, PathPoint end){
         this.playing= playing;
@@ -31,6 +32,11 @@ public class EnemyManager {
         addEnemy(KNIGHT);
         addEnemy(WOLF);
         loadEnemyImgs();
+        loadEfectImg();
+    }
+
+    private void loadEfectImg() {
+        slowEffect = LoadSave.getSpriteAtlas().getSubimage(32*9,32*2,32,32);
     }
 
     private void loadEnemyImgs() {
@@ -186,7 +192,7 @@ public class EnemyManager {
 
     private void drawEffects(Graphics g, Enemy e) {
         if(e.isSlowed()){
-
+            g.drawImage(slowEffect, (int) e.getX(),(int) e.getY(),null);
         }
     }
 
