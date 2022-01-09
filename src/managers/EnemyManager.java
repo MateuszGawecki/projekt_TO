@@ -45,32 +45,12 @@ public class EnemyManager {
 
     public void update(){
 
-        updateWaveManager();
 
-        if(isTimeForNewEnemy()){
-            spawnEnemy();
-        }
 
         for(Enemy e : enemies){
             if(e.isAlive())
                 updateEnemyMove(e);
         }
-    }
-
-    private void updateWaveManager() {
-        playing.getWaveManager().update();
-    }
-
-    private void spawnEnemy() {
-        addEnemy(playing.getWaveManager().getNextEnemy());
-    }
-
-    private boolean isTimeForNewEnemy() {
-        if(playing.getWaveManager().isTimeForNewEnemy())
-            if(playing.getWaveManager().isThereMoreEnemiesInWave())
-                return true;
-
-        return false;
     }
 
     private void updateEnemyMove(Enemy e) {
@@ -84,7 +64,7 @@ public class EnemyManager {
         if(getTileType(newX,newY) == ROAD_TIlE){
             e.move(GetSpeed(e.getEnemyType()),e.getLastDir());
         }else if(isAtEnd(e)){
-            System.out.println("Lives lost");
+            e.kill();
         } else {
             setNewDirectionAndMove(e);
         }
@@ -230,5 +210,21 @@ public class EnemyManager {
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
+    }
+
+    public void spawnEnemy(int nextEnemy) {
+        addEnemy(nextEnemy);
+    }
+
+    public int getAmountOfAliveEnemies() {
+        int size = 0;
+
+        for(Enemy e: enemies){
+            if(e.isAlive()){
+                size++;
+            }
+        }
+
+        return size;
     }
 }

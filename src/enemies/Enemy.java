@@ -126,4 +126,10 @@ public abstract class Enemy {
     public boolean isSlowed(){
         return slowTick < slowTickLimit;
     }
+
+    public void kill() {
+        //for killing enemy at end of road
+        alive = false;
+        health = 0;
+    }
 }

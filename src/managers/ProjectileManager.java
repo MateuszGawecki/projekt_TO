@@ -33,10 +33,10 @@ public class ProjectileManager {
         for(int i=0; i<3;i++){
             proj_img[i] = atlas.getSubimage((7+i) * 32, 32,32,32);
         }
-        importExploson(atlas);
+        importExplosion(atlas);
     }
 
-    private void importExploson(BufferedImage atlas) {
+    private void importExplosion(BufferedImage atlas) {
         explo_imgs = new BufferedImage[7];
 
         for(int i=0; i< 7; i++){
@@ -147,9 +147,9 @@ public class ProjectileManager {
             if(p.isActive()) {
                 if(p.getProjectileType() == ARROW){
                     g2d.translate(p.getPos().x, p.getPos().y);
-                    g2d.rotate(Math.toRadians(90));
+                    g2d.rotate(Math.toRadians(p.getRotation()));
                     g2d.drawImage(proj_img[p.getProjectileType()],-16, -16, null);
-                    g2d.rotate(-Math.toRadians(90));
+                    g2d.rotate(-Math.toRadians(p.getRotation()));
                     g2d.translate(-p.getPos().x, -p.getPos().y);
                 }else {
                     g2d.drawImage(proj_img[p.getProjectileType()], (int) p.getPos().x -16, (int) p.getPos().y -16, null);
