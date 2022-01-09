@@ -6,6 +6,7 @@ import helpz.LoadSave;
 import managers.EnemyManager;
 import managers.ProjectileManager;
 import managers.TowerManager;
+import managers.WaveManager;
 import objects.PathPoint;
 import objects.Projectile;
 import objects.Tower;
@@ -28,6 +29,7 @@ public class Playing extends GameScene implements SceneMethods{
     private EnemyManager enemyManager;
     private TowerManager towerManager;
     private ProjectileManager projectileManager;
+    private WaveManager waveManager;
 
     private Tower selectedTower;
 
@@ -40,6 +42,11 @@ public class Playing extends GameScene implements SceneMethods{
         enemyManager = new EnemyManager(this,start,end);
         towerManager = new TowerManager(this);
         projectileManager = new ProjectileManager(this);
+        waveManager = new WaveManager(this);
+    }
+
+    public WaveManager getWaveManager() {
+        return waveManager;
     }
 
     private void loadDefaultLevel() {
