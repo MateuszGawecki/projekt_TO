@@ -2,9 +2,11 @@ package objects;
 
 import helpz.Constants;
 
+import static helpz.Constants.Towers.*;
+
 public class Tower {
 
-    private int x, y, id, towerType, cdTick,dmg;
+    private int x, y, id, towerType, cdTick,dmg, tier;
     private float range, cooldown;
 
     public Tower(int x, int y, int id, int towerType) {
@@ -12,9 +14,35 @@ public class Tower {
         this.y = y;
         this.id = id;
         this.towerType = towerType;
+        tier = 1;
         setDefaultDmg();
         setDefalutRange();
         setDefaultCooldown();
+    }
+
+    public void upgradeTower(){
+        tier++;
+
+        switch (towerType){
+            case ARCHER:
+                dmg+=2;
+                range+=20;
+                cooldown-=5;
+                break;
+            case CANNON:
+                dmg+=5;
+                range+=20;
+                cooldown-=15;
+                break;
+            case WIZARD:
+                range+=20;
+                cooldown-=10;
+                break;
+        }
+    }
+
+    public int getTier(){
+        return tier;
     }
 
     private void setDefaultCooldown() {

@@ -162,16 +162,16 @@ public class EnemyManager {
 
         switch (enemyType){
             case ORC:
-                enemies.add(new Orc(x, y,0));
+                enemies.add(new Orc(x, y,0, this));
                 break;
             case BAT:
-                enemies.add(new Bat(x,y,1));
+                enemies.add(new Bat(x,y,1,this));
                 break;
             case KNIGHT:
-                enemies.add(new Knight(x, y,2));
+                enemies.add(new Knight(x, y,2,this));
                 break;
             case WOLF:
-                enemies.add(new Wolf(x, y,3));
+                enemies.add(new Wolf(x, y,3,this));
                 break;
             default:
                 break;
@@ -226,5 +226,9 @@ public class EnemyManager {
         }
 
         return size;
+    }
+
+    public void rewardPlayer(int enemyType) {
+        playing.rewardPlayer(enemyType);
     }
 }

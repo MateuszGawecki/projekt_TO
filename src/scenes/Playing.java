@@ -2,6 +2,7 @@ package scenes;
 
 import Game.Game;
 import enemies.Enemy;
+import helpz.Constants;
 import helpz.LoadSave;
 import managers.EnemyManager;
 import managers.ProjectileManager;
@@ -32,6 +33,8 @@ public class Playing extends GameScene implements SceneMethods{
     private WaveManager waveManager;
 
     private Tower selectedTower;
+
+    private int goldTick;
 
     public Playing(Game game) {
         super(game);
@@ -91,6 +94,11 @@ public class Playing extends GameScene implements SceneMethods{
         towerManager.update();
         projectileManager.update();
         waveManager.update();
+
+        //Gold tick
+        goldTick++;
+        if(goldTick % (60 * 3) == 0)
+            actionBar.addGold(1);
 
         if(isAllEnemiesDead()){
             if(isThereMoreWaves()){
@@ -197,6 +205,10 @@ public class Playing extends GameScene implements SceneMethods{
 
     }
 
+    public void rewardPlayer(int enemyType){
+        actionBar.addGold(Constants.Enemies.GetReward(enemyType));
+    }
+
     private void removeGold(int towerType) {
         actionBar.payForTower(towerType);
     }
@@ -256,5 +268,13 @@ public class Playing extends GameScene implements SceneMethods{
 
     public void shootEnemy(Enemy e, Tower t) {
         projectileManager.newProjectile(t,e);
+    }
+
+    public void removeTover(Tower displayedTower) {
+        towerManager.removeTower(displayedTower);
+    }
+
+    public void upgradeTower(Tower displayedTower) {
+        towerManager.upgradeTower(displayedTower);
     }
 }

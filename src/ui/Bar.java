@@ -1,7 +1,5 @@
 package ui;
 
-import scenes.Playing;
-
 import java.awt.*;
 
 public class Bar {
@@ -14,7 +12,7 @@ public class Bar {
         this.height = height;
     }
 
-    protected void drawButtonFeedBack(Graphics g, MyButton b){
+    protected void drawButtonFeedback(Graphics g, MyButton b){
         //Mouseover
         if(b.isMouseOver()){
             g.setColor(Color.WHITE);

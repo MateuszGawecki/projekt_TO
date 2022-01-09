@@ -1,6 +1,7 @@
 package enemies;
 
 import helpz.Constants;
+import managers.EnemyManager;
 
 import java.awt.*;
 
@@ -18,13 +19,15 @@ public abstract class Enemy {
     private int enemyType;
     private int lastDir;
     private boolean alive = true;
+    private EnemyManager enemyManager;
 
-    public Enemy(float x, float y,int Id, int enemyType) {
+    public Enemy(float x, float y, int Id, int enemyType, EnemyManager enemyManager) {
         this.x = x;
         this.y = y;
         this.Id = Id;
         this.enemyType = enemyType;
         this.bounds = new Rectangle((int) x, (int) y, 32, 32);
+        this.enemyManager = enemyManager;
         lastDir = -1;
         setStartHealth();
     }
@@ -111,8 +114,10 @@ public abstract class Enemy {
 
     public void hurt(int dmg) {
         this.health-=dmg;
-        if(health <= 0)
+        if(health <= 0) {
             alive = false;
+            enemyManager.rewardPlayer(enemyType);
+        }
     }
 
     public boolean isAlive(){

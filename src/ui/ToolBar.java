@@ -1,7 +1,6 @@
 package ui;
 
 import helpz.LoadSave;
-import inputs.MyKeyboardListener;
 import objects.Tile;
 import scenes.Editing;
 
@@ -110,13 +109,13 @@ public class ToolBar extends Bar{
 
     private void drawPathButtons(Graphics g, MyButton b, BufferedImage img) {
         g.drawImage(img,b.getX(),b.getY(),b.getWidth(),b.getHeight(),null);
-        drawButtonFeedBack(g,b);
+        drawButtonFeedback(g,b);
     }
 
     private void drawNormalButton(Graphics g, MyButton b) {
         g.drawImage(getButtImg(b.getId()),b.getX(),b.getY(),b.getWidth(),b.getHeight(),null);
 
-        drawButtonFeedBack(g,b);
+        drawButtonFeedback(g,b);
     }
 
     private void drawMapButtons(Graphics g) {
@@ -127,7 +126,7 @@ public class ToolBar extends Bar{
 
             g.drawImage(img, b.getX(), b.getY(),b.getWidth(),b.getHeight(),null);
 
-            drawButtonFeedBack(g,b);
+            drawButtonFeedback(g,b);
         }
     }
 
