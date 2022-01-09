@@ -7,8 +7,7 @@ import scenes.Playing;
 import java.awt.*;
 import java.text.DecimalFormat;
 
-import static Game.GameStates.MENU;
-import static Game.GameStates.setGameState;
+import static Game.GameStates.*;
 import static helpz.Constants.Towers.*;
 
 public class ActionBar extends Bar{
@@ -26,12 +25,24 @@ public class ActionBar extends Bar{
     private int gold = 100 ,towerCostType;
     private boolean showTowerCost;
 
+    private int lives = 25;
+
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x,y,width,height);
         this.playing=playing;
         formatter = new DecimalFormat("0.0");
 
         initButtons();
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void removeOneLife(){
+        lives--;
+        if(lives <= 0)
+            SetGameState(GAME_OVER);
     }
 
     private void initButtons() {
@@ -71,6 +82,9 @@ public class ActionBar extends Bar{
             g.setColor(Color.BLACK);
             g.drawString("Game is Paused!", 110, 790);
         }
+
+        g.setColor(Color.BLACK);
+        g.drawString("Lives: "+ lives, 110,750);
     }
 
     private void drawWaveInfo(Graphics g) {
@@ -237,7 +251,7 @@ public class ActionBar extends Bar{
 
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
-            setGameState(MENU);
+            SetGameState(MENU);
         else if(bPause.getBounds().contains(x,y))
             togglePause();
         else {
@@ -344,5 +358,14 @@ public class ActionBar extends Bar{
 
     public void addGold(int reward) {
         gold += reward;
+    }
+
+    public void resetEverything() {
+        lives = 25;
+        towerCostType = 0;
+        showTowerCost = false;
+        gold = 100;
+        selectedTower = null;
+        displayedTower = null;
     }
 }

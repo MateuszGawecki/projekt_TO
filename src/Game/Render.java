@@ -33,6 +33,13 @@ public class Render {
             case EDITING:
                 game.getEditing().render(g);
                 break;
+
+            case GAME_OVER:
+                game.getGameOver().render(g);
+                break;
+
+            default:
+                break;
         }
     }
 }

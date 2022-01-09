@@ -65,6 +65,7 @@ public class EnemyManager {
             e.move(GetSpeed(e.getEnemyType()),e.getLastDir());
         }else if(isAtEnd(e)){
             e.kill();
+            playing.removeOneLife();
         } else {
             setNewDirectionAndMove(e);
         }
@@ -102,14 +103,6 @@ public class EnemyManager {
 
     private void fixEnemyOffsetTile(Enemy e, int dir, int xCord, int yCord) {
         switch (dir){
-//            case LEFT:
-//                if(xCord >0)
-//                    xCord--;
-//                break;
-//            case UP:
-//                if(yCord>0)
-//                    yCord--;
-//                break;
             case RIGHT:
                 if(xCord<19)
                     xCord++;
@@ -230,5 +223,9 @@ public class EnemyManager {
 
     public void rewardPlayer(int enemyType) {
         playing.rewardPlayer(enemyType);
+    }
+
+    public void reset() {
+        enemies.clear();
     }
 }

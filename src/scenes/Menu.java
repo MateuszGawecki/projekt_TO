@@ -3,12 +3,7 @@ package scenes;
 import Game.Game;
 import ui.MyButton;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 import static Game.GameStates.*;
 
@@ -42,11 +37,11 @@ public class Menu extends GameScene implements SceneMethods{
     @Override
     public void mouseClicked(int x, int y) {
         if(bPlaying.getBounds().contains(x,y)) {
-            setGameState(PLAYING);
+            SetGameState(PLAYING);
         } else if(bEditing.getBounds().contains(x,y)){
-            setGameState(EDITING);
+            SetGameState(EDITING);
         } else if(bSettings.getBounds().contains(x,y)){
-            setGameState(SETTINGS);
+            SetGameState(SETTINGS);
         } else if(bQuit.getBounds().contains(x, y)){
             System.exit(0);
         }

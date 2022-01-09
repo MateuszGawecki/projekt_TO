@@ -97,4 +97,9 @@ public class TowerManager {
                 t.upgradeTower();
         }
     }
+
+    public void reset() {
+        towers.clear();
+        towerAmount = 0;
+    }
 }

@@ -4,10 +4,7 @@ import helpz.LoadSave;
 import inputs.MyKeyboardListener;
 import inputs.MyMouseListener;
 import managers.TileManager;
-import scenes.Editing;
-import scenes.Menu;
-import scenes.Playing;
-import scenes.Settings;
+import scenes.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,6 +27,7 @@ public class Game extends JFrame implements Runnable {
     private Playing playing;
     private Settings settings;
     private Editing editing;
+    private GameOver gameOver;
 
     private TileManager tileManager;
 
@@ -47,6 +45,7 @@ public class Game extends JFrame implements Runnable {
 
         initClasses();
         createDefaultLevel();
+        setTitle("Tower Defence");
         add(gameScreen);
 
         pack();
@@ -70,6 +69,7 @@ public class Game extends JFrame implements Runnable {
         playing = new Playing(this);
         settings = new Settings(this);
         editing = new Editing(this);
+        gameOver = new GameOver(this);
     }
 
     @Override
@@ -159,5 +159,9 @@ public class Game extends JFrame implements Runnable {
 
     public TileManager getTileManager() {
         return tileManager;
+    }
+
+    public GameOver getGameOver() {
+        return gameOver;
     }
 }

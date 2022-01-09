@@ -35,7 +35,7 @@ public class Settings extends GameScene implements SceneMethods{
     @Override
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
-            setGameState(MENU);
+            SetGameState(MENU);
 
     }
 

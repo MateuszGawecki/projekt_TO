@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static Game.GameStates.MENU;
-import static Game.GameStates.setGameState;
+import static Game.GameStates.SetGameState;
 
 public class ToolBar extends Bar{
     private MyButton bMenu, bSave;
@@ -145,7 +145,7 @@ public class ToolBar extends Bar{
 
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
-            setGameState(MENU);
+            SetGameState(MENU);
         else if(bSave.getBounds().contains(x,y))
             saveLevel();
         else if(bWater.getBounds().contains(x,y)){
