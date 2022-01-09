@@ -1,5 +1,6 @@
 package ui;
 
+import helpz.Constants;
 import objects.Tile;
 import objects.Tower;
 import scenes.Playing;
@@ -23,6 +24,9 @@ public class ActionBar extends Bar{
     private Tower displayedTower;
 
     private DecimalFormat formatter;
+
+    private int gold = 100 ,towerCostType;
+    private boolean showTowerCost;
 
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x,y,width,height);
@@ -65,17 +69,42 @@ public class ActionBar extends Bar{
         drawWaveTimerInfo(g);
         drawEnemiesLeftInfo(g);
         drawWavesLeftInfo(g);
+        drawGoldAmount(g);
+        if(showTowerCost)
+            drawTowerCost(g);
+    }
+
+    private void drawTowerCost(Graphics g) {
+        g.setColor(Color.GRAY);
+        g.fillRect(280,650,120,50);
+        g.setColor(Color.BLACK);
+        g.drawRect(280,650,120,50);
+
+        g.drawString("" + getTowerCostName(), 285, 670);
+        g.drawString("Cost: " + getTowerCostCost() + "g", 285,695);
+    }
+
+    private int getTowerCostCost() {
+        return Constants.Towers.GetTowerCost(towerCostType);
+    }
+
+    private String getTowerCostName() {
+        return Constants.Towers.GetName(towerCostType);
+    }
+
+    private void drawGoldAmount(Graphics g) {
+        g.drawString("Gold: "+ gold, 110, 725);
     }
 
     private void drawWavesLeftInfo(Graphics g) {
         int current = playing.getWaveManager().getWaveIndex();
         int size = playing.getWaveManager().getWaves().size();
-        g.drawString("Wave: " + (current + 1) + " / " + size, 425,690);
+        g.drawString("Wave: " + (current + 1) + " / " + size, 425,770);
     }
 
     private void drawEnemiesLeftInfo(Graphics g) {
         int remaining = playing.getEnemyManager().getAmountOfAliveEnemies();
-        g.drawString("Enemies left: " + remaining, 425,720);
+        g.drawString("Enemies left: " + remaining, 425,790);
     }
 
     private void drawWaveTimerInfo(Graphics g){
@@ -83,7 +112,7 @@ public class ActionBar extends Bar{
             float timeLeft = playing.getWaveManager().getTimeLeft();
             String formattedText = formatter.format(timeLeft);
 
-            g.drawString("Time left: " + formattedText,425,660);
+            g.drawString("Time left: " + formattedText,425,750);
         }
     }
 
@@ -146,6 +175,7 @@ public class ActionBar extends Bar{
 
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
+        showTowerCost = false;
 
         if (bMenu.getBounds().contains(x, y))
             bMenu.setMouseOver(true);
@@ -153,6 +183,8 @@ public class ActionBar extends Bar{
             for(MyButton b : towerButtons)
                 if(b.getBounds().contains(x,y)) {
                     b.setMouseOver(true);
+                    showTowerCost = true;
+                    towerCostType = b.getId();
                     return;
                 }
         }
@@ -179,5 +211,9 @@ public class ActionBar extends Bar{
 
     public void displayTower(Tower t) {
         displayedTower = t;
+    }
+
+    public void payForTower(int towerType) {
+        this.gold -= Constants.Towers.GetTowerCost(towerType);
     }
 }

@@ -182,6 +182,9 @@ public class Playing extends GameScene implements SceneMethods{
             if(selectedTower !=null){
                 if(isTileGrass(mouseX,mouseY)){
                     if(getTowerAt(mouseX,mouseY) == null){
+
+                        removeGold(selectedTower.getTowerType());
+
                         towerManager.addTower(selectedTower, mouseX, mouseY);
                         selectedTower = null;
                     }
@@ -192,6 +195,10 @@ public class Playing extends GameScene implements SceneMethods{
             }
         }
 
+    }
+
+    private void removeGold(int towerType) {
+        actionBar.payForTower(towerType);
     }
 
     private Tower getTowerAt(int mouseX, int mouseY) {
