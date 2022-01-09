@@ -116,4 +116,8 @@ public class MyButton {
     public boolean isMousePressed() {
         return mousePressed;
     }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }

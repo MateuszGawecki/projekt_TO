@@ -35,6 +35,7 @@ public class Playing extends GameScene implements SceneMethods{
     private Tower selectedTower;
 
     private int goldTick;
+    private boolean gamePaused;
 
     public Playing(Game game) {
         super(game);
@@ -46,6 +47,7 @@ public class Playing extends GameScene implements SceneMethods{
         towerManager = new TowerManager(this);
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
+        gamePaused = false;
     }
 
     public WaveManager getWaveManager() {
@@ -89,31 +91,33 @@ public class Playing extends GameScene implements SceneMethods{
     }
 
     public void update(){
-        updateTick();
-        enemyManager.update();
-        towerManager.update();
-        projectileManager.update();
-        waveManager.update();
+        if(!gamePaused){
+            updateTick();
+            enemyManager.update();
+            towerManager.update();
+            projectileManager.update();
+            waveManager.update();
 
-        //Gold tick
-        goldTick++;
-        if(goldTick % (60 * 3) == 0)
-            actionBar.addGold(1);
+            //Gold tick
+            goldTick++;
+            if(goldTick % (60 * 3) == 0)
+                actionBar.addGold(1);
 
-        if(isAllEnemiesDead()){
-            if(isThereMoreWaves()){
-                waveManager.startWaveTimer();
-                //Check timer
-                if(isWaveTimerOver()){
-                    waveManager.increaseWaveIndex();
-                    enemyManager.getEnemies().clear();
-                    waveManager.resetEnemyIndex();
+            if(isAllEnemiesDead()){
+                if(isThereMoreWaves()){
+                    waveManager.startWaveTimer();
+                    //Check timer
+                    if(isWaveTimerOver()){
+                        waveManager.increaseWaveIndex();
+                        enemyManager.getEnemies().clear();
+                        waveManager.resetEnemyIndex();
+                    }
                 }
             }
-        }
 
-        if(isTimeForNewEnemy()){
-            spawnEnemy();
+            if(isTimeForNewEnemy()){
+                spawnEnemy();
+            }
         }
     }
 
@@ -223,6 +227,14 @@ public class Playing extends GameScene implements SceneMethods{
         int tileType = getGame().getTileManager().getTile(id).getTileType();
 
         return tileType == GRASS_TILE;
+    }
+
+    public void setGamePaused(boolean gamePaused){
+        this.gamePaused = gamePaused;
+    }
+
+    public boolean isGamePaused(){
+        return gamePaused;
     }
 
     @Override
