@@ -137,4 +137,8 @@ public abstract class Enemy {
         alive = false;
         health = 0;
     }
+
+    public void setLastDir(int newDir) {
+        this.lastDir = newDir;
+    }
 }

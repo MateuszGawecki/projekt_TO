@@ -2,6 +2,7 @@ package managers;
 
 import enemies.*;
 import helpz.LoadSave;
+import helpz.Utilz;
 import objects.PathPoint;
 import scenes.Playing;
 
@@ -21,6 +22,7 @@ public class EnemyManager {
     private PathPoint start, end;
     private int HpBarWidth = 20;
     private BufferedImage slowEffect;
+    private int[][] roadDirArr;
 
     public EnemyManager(Playing playing, PathPoint start, PathPoint end){
         this.playing= playing;
@@ -29,14 +31,35 @@ public class EnemyManager {
         this.end=end;
         loadEnemyImgs();
         loadEfectImg();
+        loadRoadDirArr();
+
+        //tempMethod();
+    }
+
+    public void reloadRoadDirArr(int [][] newArr){
+        this.roadDirArr = newArr;
+    }
+
+    private void loadRoadDirArr() {
+        roadDirArr = Utilz.GetRoadDirArr(playing.getGame().getTileManager().getTypeArr(), start,end);
+    }
+
+    private void tempMethod() {
+        int[][] arr = Utilz.GetRoadDirArr(playing.getGame().getTileManager().getTypeArr(), start,end);
+
+        for(int j = 0; j< arr.length ; j++){
+            for(int i = 0 ; i< arr[0].length ; i++)
+                System.out.print(arr[j][i] + "|");
+            System.out.println();
+        }
     }
 
     private void loadEfectImg() {
-        slowEffect = LoadSave.getSpriteAtlas().getSubimage(32*9,32*2,32,32);
+        slowEffect = LoadSave.GetSpriteAtlas().getSubimage(32*9,32*2,32,32);
     }
 
     private void loadEnemyImgs() {
-        BufferedImage atlas = LoadSave.getSpriteAtlas();
+        BufferedImage atlas = LoadSave.GetSpriteAtlas();
 
         for(int i =0; i<4 ; i++){
             enemyImgs[i] = atlas.getSubimage(i*32,32,32,32);
@@ -44,13 +67,51 @@ public class EnemyManager {
     }
 
     public void update(){
-
-
-
         for(Enemy e : enemies){
-            if(e.isAlive())
-                updateEnemyMove(e);
+            if(e.isAlive()){
+                //updateEnemyMove(e);
+                updateEnemyMoveNew(e);
+            }
         }
+    }
+
+    private void updateEnemyMoveNew(Enemy e) {
+        PathPoint currTile = getEnemyTile(e);
+        int dir = roadDirArr[currTile.getyCord()][currTile.getxCord()];
+
+        e.move(GetSpeed(e.getEnemyType()), dir);
+
+        PathPoint newTile = getEnemyTile(e);
+        if(isTileTheSame(newTile, end)){
+            e.kill();
+            playing.removeOneLife();
+        }
+
+        if(!isTileTheSame(currTile,newTile)){
+            int newDir = roadDirArr[newTile.getyCord()][newTile.getxCord()];
+            if(newDir != dir){
+                e.setPos(newTile.getxCord() * 32, newTile.getyCord() * 32);
+                e.setLastDir(newDir);
+            }
+        }
+    }
+
+    private PathPoint getEnemyTile(Enemy e) {
+        switch (e.getLastDir()){
+            case LEFT:
+                return new PathPoint((int)((e.getX() + 31) / 32), (int) (e.getY() / 32));
+            case UP:
+                return new PathPoint((int)(e.getX() / 32), (int) ((e.getY() + 31) / 32));
+            case RIGHT:
+            case DOWN:
+                return new PathPoint((int)(e.getX() / 32), (int) (e.getY() / 32));
+        }
+
+        return new PathPoint((int)(e.getX() / 32), (int) (e.getY() / 32));
+    }
+
+    private boolean isTileTheSame(PathPoint currTile, PathPoint newTile) {
+        return currTile.getxCord() == newTile.getxCord() && currTile.getyCord() == newTile.getyCord();
     }
 
     private void updateEnemyMove(Enemy e) {
@@ -151,7 +212,7 @@ public class EnemyManager {
     public void addEnemy(int enemyType){
 
         int x = start.getxCord() *32;
-        int y = start.getxCord() *32;
+        int y = start.getyCord() *32;
 
         switch (enemyType){
             case ORC:

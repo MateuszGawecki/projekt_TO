@@ -2,14 +2,13 @@ package scenes;
 
 import Game.Game;
 import helpz.LoadSave;
+import helpz.Utilz;
 import objects.PathPoint;
 import objects.Tile;
-import ui.ActionBar;
 import ui.ToolBar;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static helpz.Constants.Tiles.*;
@@ -36,8 +35,8 @@ public class Editing extends GameScene implements SceneMethods{
     }
 
     private void loadDefaultLevel() {
-        lvl = LoadSave.getLevelData("new level");
-        ArrayList<PathPoint> points = LoadSave.getLevelPathPoints("new level");
+        lvl = LoadSave.GetLevelData("new level");
+        ArrayList<PathPoint> points = LoadSave.GetLevelPathPoints("new level");
         start = points.get(0);
         end = points.get(1);
     }
@@ -84,6 +83,7 @@ public class Editing extends GameScene implements SceneMethods{
     public void saveLevel(){
         LoadSave.SaveLevel("new level", lvl, start,end);
         getGame().getPlaying().setLevel(lvl);
+        getGame().getPlaying().getEnemyManager().reloadRoadDirArr(Utilz.GetRoadDirArr(getGame().getTileManager().getTypeArr(), start,end));
     }
 
     @Override

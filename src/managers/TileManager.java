@@ -1,6 +1,5 @@
 package managers;
 
-import helpz.Constants;
 import helpz.ImgFix;
 import helpz.LoadSave;
 import objects.Tile;
@@ -85,7 +84,7 @@ public class TileManager {
     }
 
     private void loadAtlas() {
-        atlas = LoadSave.getSpriteAtlas();
+        atlas = LoadSave.GetSpriteAtlas();
     }
 
     public BufferedImage getSprite(int id){
@@ -101,6 +100,19 @@ public class TileManager {
         return arr;
     }
 
+    public int[][] getTypeArr(){
+        int[][] idArr = LoadSave.GetLevelData("new level");
+        int[][] typeArr = new int[idArr.length][idArr[0].length];
+
+        for(int j = 0; j < idArr.length; j++){
+            for(int i = 0; i < idArr[0].length; i++){
+                int id = idArr[j][i];
+                typeArr[j][i] = tiles.get(id).getTileType();
+            }
+        }
+
+        return typeArr;
+    }
 
     private BufferedImage getSprite(int xCord, int yCord){
         return atlas.getSubimage(xCord *32,yCord *32, 32, 32);

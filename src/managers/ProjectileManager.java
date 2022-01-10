@@ -27,7 +27,7 @@ public class ProjectileManager {
         importImgs();
     }
     private void importImgs(){
-        BufferedImage atlas = LoadSave.getSpriteAtlas();
+        BufferedImage atlas = LoadSave.GetSpriteAtlas();
         proj_img = new BufferedImage[3];
 
         for(int i=0; i<3;i++){

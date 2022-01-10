@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class LoadSave {
 
-    public static BufferedImage getSpriteAtlas(){
+    public static BufferedImage GetSpriteAtlas(){
 
         BufferedImage img = null;
         InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("spriteatlas.png");
@@ -62,7 +62,7 @@ public class LoadSave {
         }
     }
 
-    public static int[][] getLevelData(String name){
+    public static int[][] GetLevelData(String name){
         File lvlFile = new File("res/" + name + ".txt");
 
         if(lvlFile.exists()){
@@ -92,7 +92,7 @@ public class LoadSave {
         return list;
     }
 
-    public static ArrayList<PathPoint> getLevelPathPoints(String name){
+    public static ArrayList<PathPoint> GetLevelPathPoints(String name){
         File lvlFile = new File("res/" + name + ".txt");
 
         if(lvlFile.exists()){

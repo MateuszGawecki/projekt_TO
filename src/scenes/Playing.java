@@ -9,7 +9,6 @@ import managers.ProjectileManager;
 import managers.TowerManager;
 import managers.WaveManager;
 import objects.PathPoint;
-import objects.Projectile;
 import objects.Tower;
 import ui.ActionBar;
 
@@ -55,8 +54,8 @@ public class Playing extends GameScene implements SceneMethods{
     }
 
     private void loadDefaultLevel() {
-        lvl = LoadSave.getLevelData("new level");
-        ArrayList<PathPoint> points = LoadSave.getLevelPathPoints("new level");
+        lvl = LoadSave.GetLevelData("new level");
+        ArrayList<PathPoint> points = LoadSave.GetLevelPathPoints("new level");
         start = points.get(0);
         end = points.get(1);
     }

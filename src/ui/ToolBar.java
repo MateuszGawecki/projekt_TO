@@ -40,8 +40,8 @@ public class ToolBar extends Bar{
     }
 
     private void initPathImgs() {
-        pathStart = LoadSave.getSpriteAtlas().getSubimage(7*32,2*32,32,32);
-        pathEnd = LoadSave.getSpriteAtlas().getSubimage(8*32,2*32,32,32);
+        pathStart = LoadSave.GetSpriteAtlas().getSubimage(7*32,2*32,32,32);
+        pathEnd = LoadSave.GetSpriteAtlas().getSubimage(8*32,2*32,32,32);
     }
 
     public void draw(Graphics g){

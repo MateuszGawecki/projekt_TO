@@ -1,7 +1,6 @@
 package managers;
 
 import enemies.Enemy;
-import helpz.Constants;
 import helpz.LoadSave;
 import helpz.Utilz;
 import objects.Tower;
@@ -10,8 +9,6 @@ import scenes.Playing;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import static helpz.Constants.Towers.*;
 
 public class TowerManager {
 
@@ -27,7 +24,7 @@ public class TowerManager {
     }
 
     private void loadTowerImgs() {
-        BufferedImage atlas = LoadSave.getSpriteAtlas();
+        BufferedImage atlas = LoadSave.GetSpriteAtlas();
         towerImgs = new BufferedImage[3];
 
         for(int i=0; i<3;i++)
