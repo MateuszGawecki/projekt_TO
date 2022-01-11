@@ -1,7 +1,6 @@
 package helpz;
 
 import objects.PathPoint;
-
 import java.util.ArrayList;
 
 import static helpz.Constants.Direction.*;
@@ -57,7 +56,8 @@ public class Utilz {
 
     private static boolean IsTileRoad(PathPoint testTile, int[][] lvlTypeArr) {
 
-        if(testTile != null && testTile.getyCord() >= 0 && testTile.getyCord() < lvlTypeArr.length && testTile.getxCord() >= 0 && testTile.getxCord() < lvlTypeArr[0].length)
+        if(testTile != null && testTile.getyCord() >= 0 && testTile.getyCord() < lvlTypeArr.length
+                && testTile.getxCord() >= 0 && testTile.getxCord() < lvlTypeArr[0].length)
             return lvlTypeArr[testTile.getyCord()][testTile.getxCord()] == ROAD_TIlE;
 
         return false;

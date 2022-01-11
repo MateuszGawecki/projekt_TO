@@ -21,7 +21,7 @@ public class Constants {
         public static final int KNIGHT = 2;
         public static final int WOLF = 3;
 
-        public static final int GetReward(int enemyType){
+        public static int GetReward(int enemyType){
             switch (enemyType){
                 case ORC:
                     return 5;

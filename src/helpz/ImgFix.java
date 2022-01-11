@@ -37,7 +37,7 @@ public class ImgFix {
         return newImg;
     }
 
-    //Rotate Secound Img only
+    //Rotate Second Img only
 
     public static BufferedImage getBuildRotImg(BufferedImage[] imgs, int rotAngle, int rotAtIndex){
         int w = imgs[0].getWidth();

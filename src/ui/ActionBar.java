@@ -12,7 +12,7 @@ import static helpz.Constants.Towers.*;
 
 public class ActionBar extends Bar{
 
-    private MyButton bMenu, bPause;
+    private MyButton bMenu, bPause,bReplay;
     private Playing playing;
 
     private MyButton[] towerButtons;
@@ -48,6 +48,7 @@ public class ActionBar extends Bar{
     private void initButtons() {
         bMenu = new MyButton("Menu", 2, 642, 100, 30);
         bPause = new MyButton("Pause", 2, 684, 100, 30);
+        bReplay = new MyButton("Replay", 2, 726, 100, 30);
 
         towerButtons = new MyButton[3];
 
@@ -210,6 +211,7 @@ public class ActionBar extends Bar{
     private void drawButtons(Graphics g) {
         bMenu.draw(g);
         bPause.draw(g);
+        bReplay.draw(g);
 
         for(MyButton b: towerButtons) {
             g.setColor(Color.GRAY);
@@ -249,11 +251,17 @@ public class ActionBar extends Bar{
             bPause.setText("Pause");
     }
 
+    private void replayGame() {
+        playing.resetEverything();
+    }
+
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
             SetGameState(MENU);
         else if(bPause.getBounds().contains(x,y))
             togglePause();
+        else if(bReplay.getBounds().contains(x,y))
+            replayGame();
         else {
 
             if(displayedTower != null){
@@ -281,6 +289,7 @@ public class ActionBar extends Bar{
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
         bPause.setMouseOver(false);
+        bReplay.setMouseOver(false);
         showTowerCost = false;
         sellTower.setMouseOver(false);
         upgradeTower.setMouseOver(false);
@@ -289,6 +298,8 @@ public class ActionBar extends Bar{
             bMenu.setMouseOver(true);
         else if(bPause.getBounds().contains(x,y))
             bPause.setMouseOver(true);
+        else if(bReplay.getBounds().contains(x,y))
+            bReplay.setMouseOver(true);
         else {
 
             if(displayedTower != null){
@@ -316,6 +327,8 @@ public class ActionBar extends Bar{
             bMenu.setMousePressed(true);
         else if(bPause.getBounds().contains(x,y))
             bPause.setMousePressed(true);
+        else if(bReplay.getBounds().contains(x,y))
+            bReplay.setMousePressed(true);
         else{
 
             if(displayedTower != null){
@@ -341,6 +354,7 @@ public class ActionBar extends Bar{
     public void mouseReleased(int x, int y) {
         bMenu.resetBooleans();
         bPause.resetBooleans();
+        bReplay.resetBooleans();
         sellTower.resetBooleans();
         upgradeTower.resetBooleans();
 

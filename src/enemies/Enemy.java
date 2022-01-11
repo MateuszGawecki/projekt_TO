@@ -2,22 +2,16 @@ package enemies;
 
 import helpz.Constants;
 import managers.EnemyManager;
-
 import java.awt.*;
 
 import static helpz.Constants.Direction.*;
 
 public abstract class Enemy {
-
     protected float x, y;
     protected int slowTickLimit = 120;
     protected int slowTick = slowTickLimit;
     private Rectangle bounds;
-    private int health;
-    private int maxHealth;
-    private int Id;
-    private int enemyType;
-    private int lastDir;
+    private int health, maxHealth, Id, enemyType, lastDir;
     private boolean alive = true;
     private EnemyManager enemyManager;
 

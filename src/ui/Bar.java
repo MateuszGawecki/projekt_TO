@@ -2,7 +2,7 @@ package ui;
 
 import java.awt.*;
 
-public class Bar {
+public abstract class Bar {
     protected int x, y, width, height;
 
     public Bar(int x, int y, int width, int height) {

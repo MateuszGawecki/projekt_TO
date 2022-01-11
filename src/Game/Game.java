@@ -1,26 +1,20 @@
 package Game;
 
 import helpz.LoadSave;
-import inputs.MyKeyboardListener;
-import inputs.MyMouseListener;
 import managers.TileManager;
 import scenes.*;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class Game extends JFrame implements Runnable {
 
-    private BufferedImage img;
     private Thread gameThread;
 
     private final double FPS_set = 120.0;
     private final double UPS_set = 60.0;
 
     //Classes
+
     private GameScreen gameScreen;
     private Render render;
     private Menu menu;

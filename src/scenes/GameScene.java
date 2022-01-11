@@ -4,7 +4,7 @@ import Game.Game;
 
 import java.awt.image.BufferedImage;
 
-public class GameScene {
+public abstract class GameScene {
     private Game game;
     protected int animationId;
     protected int ANIMATION_SPREED = 20;

@@ -1,7 +1,6 @@
 package helpz;
 
 import objects.PathPoint;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -115,7 +114,6 @@ public class LoadSave {
             WriteToFile(lvlFile, Utilz.TwoDto1DArr(idArr), start,end);
         }else {
             System.out.println("File "+ name + "does not exist");
-            return;
         }
     }
 }

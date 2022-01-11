@@ -70,13 +70,6 @@ public class Playing extends GameScene implements SceneMethods{
         projectileManager.draw(g);
         drawSelectedTower(g);
         drawHighLight(g);
-
-        drawWaveInfos(g);
-
-    }
-
-    private void drawWaveInfos(Graphics g) {
-
     }
 
     private void drawHighLight(Graphics g) {
@@ -185,29 +178,6 @@ public class Playing extends GameScene implements SceneMethods{
         return towerManager;
     }
 
-    @Override
-    public void mouseClicked(int x, int y) {
-        if(y>=640) {
-            actionBar.mouseClicked(x, y);
-        }else {
-            if(selectedTower !=null){
-                if(isTileGrass(mouseX,mouseY)){
-                    if(getTowerAt(mouseX,mouseY) == null){
-
-                        removeGold(selectedTower.getTowerType());
-
-                        towerManager.addTower(selectedTower, mouseX, mouseY);
-                        selectedTower = null;
-                    }
-                }
-            }else {
-                Tower t = getTowerAt(mouseX,mouseY);
-                actionBar.displayTower(t);
-            }
-        }
-
-    }
-
     public void rewardPlayer(int enemyType){
         actionBar.addGold(Constants.Enemies.GetReward(enemyType));
     }
@@ -234,39 +204,6 @@ public class Playing extends GameScene implements SceneMethods{
 
     public boolean isGamePaused(){
         return gamePaused;
-    }
-
-    @Override
-    public void mouseMoved(int x, int y) {
-        if(y>=640){
-            actionBar.mouseMoved(x,y);
-        }else {
-            mouseX = (x / 32) * 32;
-            mouseY = (y / 32) * 32;
-        }
-    }
-
-    @Override
-    public void mousePressed(int x, int y) {
-        if(y>=640){
-            actionBar.mousePressed(x,y);
-        }
-    }
-
-    @Override
-    public void mouseReleased(int x, int y) {
-        actionBar.mouseReleased(x,y);
-    }
-
-    @Override
-    public void mouseDragged(int x, int y) {
-
-    }
-
-    public void keyPressed(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-            selectedTower = null;
-        }
     }
 
     public void setSelectedTower(Tower selectedTower) {
@@ -305,5 +242,60 @@ public class Playing extends GameScene implements SceneMethods{
         selectedTower = null;
         goldTick = 0;
         gamePaused = false;
+    }
+
+    @Override
+    public void mouseClicked(int x, int y) {
+        if(y>=640) {
+            actionBar.mouseClicked(x, y);
+        }else {
+            if(selectedTower !=null){
+                if(isTileGrass(mouseX,mouseY)){
+                    if(getTowerAt(mouseX,mouseY) == null){
+
+                        removeGold(selectedTower.getTowerType());
+
+                        towerManager.addTower(selectedTower, mouseX, mouseY);
+                        selectedTower = null;
+                    }
+                }
+            }else {
+                Tower t = getTowerAt(mouseX,mouseY);
+                actionBar.displayTower(t);
+            }
+        }
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+        if(y>=640){
+            actionBar.mouseMoved(x,y);
+        }else {
+            mouseX = (x / 32) * 32;
+            mouseY = (y / 32) * 32;
+        }
+    }
+
+    @Override
+    public void mousePressed(int x, int y) {
+        if(y>=640){
+            actionBar.mousePressed(x,y);
+        }
+    }
+
+    @Override
+    public void mouseReleased(int x, int y) {
+        actionBar.mouseReleased(x,y);
+    }
+
+    @Override
+    public void mouseDragged(int x, int y) {
+
+    }
+
+    public void keyPressed(KeyEvent e){
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+            selectedTower = null;
+        }
     }
 }

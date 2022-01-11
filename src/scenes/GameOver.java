@@ -53,8 +53,6 @@ public class GameOver extends GameScene implements SceneMethods{
         }
     }
 
-
-
     @Override
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);

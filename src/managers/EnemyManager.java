@@ -33,18 +33,19 @@ public class EnemyManager {
         loadEfectImg();
         loadRoadDirArr();
 
-        //tempMethod();
+        tempMethod();
     }
 
     public void reloadRoadDirArr(int [][] newArr){
         this.roadDirArr = newArr;
+        tempMethod();
     }
 
     private void loadRoadDirArr() {
         roadDirArr = Utilz.GetRoadDirArr(playing.getGame().getTileManager().getTypeArr(), start,end);
     }
 
-    private void tempMethod() {
+    private void tempMethod() { //wypisanie tablicy sciezki
         int[][] arr = Utilz.GetRoadDirArr(playing.getGame().getTileManager().getTypeArr(), start,end);
 
         for(int j = 0; j< arr.length ; j++){
