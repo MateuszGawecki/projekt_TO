@@ -45,29 +45,6 @@ public class MyButton {
         drawText(g);
     }
 
-    private void drawBorder(Graphics g) {
-        g.setColor(Color.BLACK);
-        g.drawRect(x,y,width,height);
-
-        if(mousePressed){
-            g.drawRect(x+1, y+1, width-2, height-2);
-            g.drawRect(x+2, y+2, width-4, height-4);
-        }
-    }
-
-    private void drawBody(Graphics g){
-        if(mouseOver) g.setColor(Color.GRAY);
-        else g.setColor(Color.WHITE);
-        g.fillRect(x,y,width,height);
-    }
-
-    private void drawText(Graphics g){
-        int w = g.getFontMetrics().stringWidth(text);
-        int h = g.getFontMetrics().getHeight();
-
-        g.drawString(text,x - w / 2 + width / 2 , y + h / 2 + height / 2);
-    }
-
     public void resetBooleans(){
         this.mouseOver = false;
         this.mousePressed = false;
@@ -83,10 +60,6 @@ public class MyButton {
 
     public Rectangle getBounds(){
         return bounds;
-    }
-
-    private void initBounds(){
-        this.bounds = new Rectangle(x,y,width,height);
     }
 
     public int getId() {
@@ -123,5 +96,32 @@ public class MyButton {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    private void drawBorder(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.drawRect(x,y,width,height);
+
+        if(mousePressed){
+            g.drawRect(x+1, y+1, width-2, height-2);
+            g.drawRect(x+2, y+2, width-4, height-4);
+        }
+    }
+
+    private void drawBody(Graphics g){
+        if(mouseOver) g.setColor(Color.GRAY);
+        else g.setColor(Color.WHITE);
+        g.fillRect(x,y,width,height);
+    }
+
+    private void drawText(Graphics g){
+        int w = g.getFontMetrics().stringWidth(text);
+        int h = g.getFontMetrics().getHeight();
+
+        g.drawString(text,x - w / 2 + width / 2 , y + h / 2 + height / 2);
+    }
+
+    private void initBounds(){
+        this.bounds = new Rectangle(x,y,width,height);
     }
 }

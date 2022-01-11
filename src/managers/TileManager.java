@@ -34,70 +34,16 @@ public class TileManager {
         return tiles.get(id);
     }
 
-
-    private void createTiles(){
-        int id = 0;
-
-        tiles.add(GRASS = new Tile(getSprite(9, 0), id++, GRASS_TILE));
-        tiles.add(WATER = new Tile(getAniSprites(0, 0), id++, WATER_TILE));
-
-        roadsS.add(ROAD_LR = new Tile(getSprite(8, 0), id++, ROAD_TIlE));
-		roadsS.add(ROAD_TB = new Tile(ImgFix.getRotImg(getSprite(8, 0), 90), id++, ROAD_TIlE));
-
-        roadsC.add(ROAD_B_TO_R = new Tile(getSprite(7, 0), id++, ROAD_TIlE));
-		roadsC.add(ROAD_L_TO_B = new Tile(ImgFix.getRotImg(getSprite(7, 0), 90), id++, ROAD_TIlE));
-		roadsC.add(ROAD_L_TO_T = new Tile(ImgFix.getRotImg(getSprite(7, 0), 180), id++, ROAD_TIlE));
-		roadsC.add(ROAD_T_TO_R = new Tile(ImgFix.getRotImg(getSprite(7, 0), 270), id++, ROAD_TIlE));
-
-        corners.add(BL_WATER_CORNER = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0),getSprite(5,0),0), id++, WATER_TILE));
-        corners.add(TL_WATER_CORNER = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0),getSprite(5,0),90), id++,  WATER_TILE));
-        corners.add(TR_WATER_CORNER = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0),getSprite(5,0),180), id++,  WATER_TILE));
-        corners.add(BR_WATER_CORNER = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0),getSprite(5,0),270), id++,  WATER_TILE));
-
-        beaches.add(T_WATER = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0), getSprite(6,0), 0), id++, WATER_TILE));
-        beaches.add(R_WATER = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0), getSprite(6,0), 90), id++, WATER_TILE));
-        beaches.add(B_WATER = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0), getSprite(6,0), 180), id++, WATER_TILE));
-        beaches.add(L_WATER = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0), getSprite(6,0), 270), id++, WATER_TILE));
-
-		islands.add(TL_ISLE = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0), getSprite(4,0), 0), id++, WATER_TILE));
-        islands.add(TR_ISLE = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0), getSprite(4,0), 90), id++, WATER_TILE));
-        islands.add(BR_ISLE = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0), getSprite(4,0), 180), id++, WATER_TILE));
-        islands.add(BL_ISLE = new Tile(ImgFix.getBuildRotImg(getAniSprites(0, 0), getSprite(4,0), 270), id++, WATER_TILE));
-
-        tiles.addAll(roadsS);
-        tiles.addAll(roadsC);
-        tiles.addAll(corners);
-        tiles.addAll(beaches);
-        tiles.addAll(islands);
-    }
-
     public boolean isSpriteAnimation(int spriteId){
         return tiles.get(spriteId).isAnimation();
     }
 
     public BufferedImage getAniSprite(int id, int animationIndex){
-            return tiles.get(id).getSprite(animationIndex);
-    }
-
-    private BufferedImage[] getImgs(int firstX, int firstY, int secX, int secY){
-        return new BufferedImage[]{getSprite(firstX,firstY), getSprite(secX,secY)};
-    }
-
-    private void loadAtlas() {
-        atlas = LoadSave.GetSpriteAtlas();
+        return tiles.get(id).getSprite(animationIndex);
     }
 
     public BufferedImage getSprite(int id){
         return tiles.get(id).getSprite();
-    }
-
-    private BufferedImage[] getAniSprites(int xCord, int yCord){
-        BufferedImage[] arr = new BufferedImage[4];
-        for(int i =0 ; i<4;i++){
-            arr[i] = getSprite(xCord + i,yCord);
-        }
-
-        return arr;
     }
 
     public int[][] getTypeArr(){
@@ -112,6 +58,59 @@ public class TileManager {
         }
 
         return typeArr;
+    }
+
+    private void createTiles(){
+        int id = 0;
+
+        tiles.add(GRASS = new Tile(getSprite(9, 0), id++, GRASS_TILE));
+        tiles.add(WATER = new Tile(getAniSprites(0, 0), id++, WATER_TILE));
+
+        roadsS.add(ROAD_LR = new Tile(getSprite(8, 0), id++, ROAD_TIlE));
+		roadsS.add(ROAD_TB = new Tile(ImgFix.GetRotImg(getSprite(8, 0), 90), id++, ROAD_TIlE));
+
+        roadsC.add(ROAD_B_TO_R = new Tile(getSprite(7, 0), id++, ROAD_TIlE));
+		roadsC.add(ROAD_L_TO_B = new Tile(ImgFix.GetRotImg(getSprite(7, 0), 90), id++, ROAD_TIlE));
+		roadsC.add(ROAD_L_TO_T = new Tile(ImgFix.GetRotImg(getSprite(7, 0), 180), id++, ROAD_TIlE));
+		roadsC.add(ROAD_T_TO_R = new Tile(ImgFix.GetRotImg(getSprite(7, 0), 270), id++, ROAD_TIlE));
+
+        corners.add(BL_WATER_CORNER = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0),getSprite(5,0),0), id++, WATER_TILE));
+        corners.add(TL_WATER_CORNER = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0),getSprite(5,0),90), id++,  WATER_TILE));
+        corners.add(TR_WATER_CORNER = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0),getSprite(5,0),180), id++,  WATER_TILE));
+        corners.add(BR_WATER_CORNER = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0),getSprite(5,0),270), id++,  WATER_TILE));
+
+        beaches.add(T_WATER = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0), getSprite(6,0), 0), id++, WATER_TILE));
+        beaches.add(R_WATER = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0), getSprite(6,0), 90), id++, WATER_TILE));
+        beaches.add(B_WATER = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0), getSprite(6,0), 180), id++, WATER_TILE));
+        beaches.add(L_WATER = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0), getSprite(6,0), 270), id++, WATER_TILE));
+
+		islands.add(TL_ISLE = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0), getSprite(4,0), 0), id++, WATER_TILE));
+        islands.add(TR_ISLE = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0), getSprite(4,0), 90), id++, WATER_TILE));
+        islands.add(BR_ISLE = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0), getSprite(4,0), 180), id++, WATER_TILE));
+        islands.add(BL_ISLE = new Tile(ImgFix.GetBuildRotImg(getAniSprites(0, 0), getSprite(4,0), 270), id++, WATER_TILE));
+
+        tiles.addAll(roadsS);
+        tiles.addAll(roadsC);
+        tiles.addAll(corners);
+        tiles.addAll(beaches);
+        tiles.addAll(islands);
+    }
+
+    private BufferedImage[] getImgs(int firstX, int firstY, int secX, int secY){
+        return new BufferedImage[]{getSprite(firstX,firstY), getSprite(secX,secY)};
+    }
+
+    private void loadAtlas() {
+        atlas = LoadSave.GetSpriteAtlas();
+    }
+
+    private BufferedImage[] getAniSprites(int xCord, int yCord){
+        BufferedImage[] arr = new BufferedImage[4];
+        for(int i =0 ; i<4;i++){
+            arr[i] = getSprite(xCord + i,yCord);
+        }
+
+        return arr;
     }
 
     private BufferedImage getSprite(int xCord, int yCord){

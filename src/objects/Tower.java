@@ -85,21 +85,12 @@ public class Tower {
         return towerType;
     }
 
-    public void setTowerType(int towerType) {
-        this.towerType = towerType;
-    }
-
-
     public int getDmg() {
         return dmg;
     }
 
     public float getRange() {
         return range;
-    }
-
-    public float getCooldown() {
-        return cooldown;
     }
 
     public boolean isCooldownOver() {

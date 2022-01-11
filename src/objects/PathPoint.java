@@ -13,15 +13,7 @@ public class PathPoint {
         return xCord;
     }
 
-    public void setxCord(int xCord) {
-        this.xCord = xCord;
-    }
-
     public int getyCord() {
         return yCord;
-    }
-
-    public void setyCord(int yCord) {
-        this.yCord = yCord;
     }
 }

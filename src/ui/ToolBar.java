@@ -16,17 +16,11 @@ import static Game.GameStates.SetGameState;
 public class ToolBar extends Bar{
     private MyButton bMenu, bSave;
     private MyButton bPathStart, bPathEnd;
-    private BufferedImage pathStart, pathEnd;
-
-//    private ArrayList<MyButton> tileButtons = new ArrayList<>();
-
-    private Map<MyButton, ArrayList<Tile>> map = new HashMap<>();
-
     private MyButton bGrass, bWater, bRoadS, bRoadC, bWaterC, bWaterB, bWaterI;
     private MyButton currentButton;
-
+    private BufferedImage pathStart, pathEnd;
+    private Map<MyButton, ArrayList<Tile>> map = new HashMap<>();
     private int currentIndex;
-
     private Tile selectedTile;
     private Editing editing;
 
@@ -37,11 +31,6 @@ public class ToolBar extends Bar{
         initPathImgs();
 
         initButtons();
-    }
-
-    private void initPathImgs() {
-        pathStart = LoadSave.GetSpriteAtlas().getSubimage(7*32,2*32,32,32);
-        pathEnd = LoadSave.GetSpriteAtlas().getSubimage(8*32,2*32,32,32);
     }
 
     public void draw(Graphics g){
@@ -60,6 +49,11 @@ public class ToolBar extends Bar{
 
         selectedTile = map.get(currentButton).get(currentIndex);
         editing.setSelectedTile(selectedTile);
+    }
+
+    private void initPathImgs() {
+        pathStart = LoadSave.GetSpriteAtlas().getSubimage(7*32,2*32,32,32);
+        pathEnd = LoadSave.GetSpriteAtlas().getSubimage(8*32,2*32,32,32);
     }
 
     private void initButtons() {
@@ -143,6 +137,11 @@ public class ToolBar extends Bar{
         return editing.getGame().getTileManager().getSprite(id);
     }
 
+
+    private void saveLevel() {
+        editing.saveLevel();
+    }
+
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
             SetGameState(MENU);
@@ -172,10 +171,6 @@ public class ToolBar extends Bar{
                 }
             }
         }
-    }
-
-    private void saveLevel() {
-        editing.saveLevel();
     }
 
     public void mouseMoved(int x, int y) {

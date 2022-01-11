@@ -23,16 +23,7 @@ public class TowerManager {
         loadTowerImgs();
     }
 
-    private void loadTowerImgs() {
-        BufferedImage atlas = LoadSave.GetSpriteAtlas();
-        towerImgs = new BufferedImage[3];
-
-        for(int i=0; i<3;i++)
-            towerImgs[i] = atlas.getSubimage((4 + i) * 32, 32,32,32);
-    }
-
     public void draw(Graphics g){
-       // g.drawImage(towerImgs[ARCHER],tower.getX(), tower.getY(),null);
         for(Tower t: towers){
             g.drawImage(towerImgs[t.getTowerType()],t.getX(), t.getY(),null);
         }
@@ -43,24 +34,6 @@ public class TowerManager {
             t.update();
             attackEnemyIfClose(t);
         }
-    }
-
-    private void attackEnemyIfClose(Tower t) {
-        for(Enemy e : playing.getEnemyManager().getEnemies()){
-            if(e.isAlive())
-                if(isEnemyInRange(e,t)){
-                    if(t.isCooldownOver()) {
-                        playing.shootEnemy(e, t);
-                        t.resetCooldown();
-                    }
-                }
-        }
-    }
-
-    private boolean isEnemyInRange(Enemy e, Tower t) {
-        int range = Utilz.GetHypoDistance(t.getX(),t.getY(),e.getX(),e.getY());
-
-        return range < t.getRange();
     }
 
     public BufferedImage[] getTowerImgs(){
@@ -98,5 +71,32 @@ public class TowerManager {
     public void reset() {
         towers.clear();
         towerAmount = 0;
+    }
+
+
+    private void loadTowerImgs() {
+        BufferedImage atlas = LoadSave.GetSpriteAtlas();
+        towerImgs = new BufferedImage[3];
+
+        for(int i=0; i<3;i++)
+            towerImgs[i] = atlas.getSubimage((4 + i) * 32, 32,32,32);
+    }
+
+    private void attackEnemyIfClose(Tower t) {
+        for(Enemy e : playing.getEnemyManager().getEnemies()){
+            if(e.isAlive())
+                if(isEnemyInRange(e,t)){
+                    if(t.isCooldownOver()) {
+                        playing.shootEnemy(e, t);
+                        t.resetCooldown();
+                    }
+                }
+        }
+    }
+
+    private boolean isEnemyInRange(Enemy e, Tower t) {
+        int range = Utilz.GetHypoDistance(t.getX(),t.getY(),e.getX(),e.getY());
+
+        return range < t.getRange();
     }
 }

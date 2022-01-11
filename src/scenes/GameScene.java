@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 public abstract class GameScene {
     private Game game;
     protected int animationId;
-    protected int ANIMATION_SPREED = 20;
+    protected int ANIMATION_SPEED = 20;
     protected int tick;
 
     public GameScene(Game game){
@@ -21,7 +21,7 @@ public abstract class GameScene {
 
     protected void updateTick() {
         tick++;
-        if(tick>=ANIMATION_SPREED){
+        if(tick>= ANIMATION_SPEED){
             tick = 0;
             animationId++;
             if(animationId>=4){

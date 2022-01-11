@@ -48,31 +48,6 @@ public class WaveManager {
         return waves.get(waveIndex).getEnemyList().get(enemyIndex++);
     }
 
-    private void createWaves() {
-        int wavesAmount = 10;
-
-        for(int i = 0; i < wavesAmount ; i++){
-            waves.add(generateWave(i));
-        }
-    }
-
-    private Wave generateWave(int enemyAmount) {
-        Integer[] list = new Integer[enemyAmount];
-
-        int lvl = GetDifLvl();
-
-        int type = 0;
-
-        for(int i = 0; i < enemyAmount; i++){
-            list[i] = type % 4;
-            type ++;
-            if(type > lvl)
-                type = 0;
-        }
-
-        return new Wave(new ArrayList<>(Arrays.asList(list)));
-    }
-
     public ArrayList<Wave> getWaves(){
         return waves;
     }
@@ -110,7 +85,7 @@ public class WaveManager {
         return ticksLeft / 60.0f;
     }
 
-    public boolean isWaveTmerStarted() {
+    public boolean isWaveTimerStarted() {
         return waveStartTimer;
     }
 
@@ -124,4 +99,30 @@ public class WaveManager {
         enemySpawnTick = enemySpawnTickLimit;
         createWaves();
     }
+
+    private void createWaves() {
+        int wavesAmount = 10;
+
+        for(int i = 0; i < wavesAmount ; i++){
+            waves.add(generateWave(i));
+        }
+    }
+
+    private Wave generateWave(int enemyAmount) {
+        Integer[] list = new Integer[enemyAmount];
+
+        int lvl = GetDifLvl();
+
+        int type = 0;
+
+        for(int i = 0; i < enemyAmount; i++){
+            list[i] = type % 4;
+            type ++;
+            if(type > lvl)
+                type = 0;
+        }
+
+        return new Wave(new ArrayList<>(Arrays.asList(list)));
+    }
+
 }

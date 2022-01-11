@@ -28,20 +28,12 @@ public class Projectile {
         return pos;
     }
 
-    public void setPos(Point2D.Float pos) {
-        this.pos = pos;
-    }
-
     public int getId() {
         return id;
     }
 
     public int getProjectileType() {
         return projectileType;
-    }
-
-    public void setProjectileType(int projectileType) {
-        this.projectileType = projectileType;
     }
 
     public boolean isActive() {

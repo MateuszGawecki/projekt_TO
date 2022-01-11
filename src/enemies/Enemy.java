@@ -26,11 +26,6 @@ public abstract class Enemy {
         setStartHealth();
     }
 
-    private void setStartHealth(){
-        health = Constants.Enemies.GetStartHealth(enemyType);
-        maxHealth = health;
-    }
-
     public void setPos(int x, int y){
         //for pos fix
         this.x = x;
@@ -65,13 +60,50 @@ public abstract class Enemy {
             default:
                 break;
         }
-        
+
         updateHitBox();
     }
+
+    public boolean isSlowed(){
+        return slowTick < slowTickLimit;
+    }
+
+    public void hurt(int dmg) {
+        this.health-=dmg;
+        if(health <= 0) {
+            alive = false;
+            enemyManager.rewardPlayer(enemyType);
+        }
+    }
+
+    public void slow() {
+        slowTick = 0;
+    }
+
+    public void kill() {
+        //for killing enemy at end of road
+        alive = false;
+        health = 0;
+    }
+
+    private void setStartHealth(){
+        health = Constants.Enemies.GetStartHealth(enemyType);
+        maxHealth = health;
+    }
+
 
     private void updateHitBox() {
         bounds.x = (int) x;
         bounds.y = (int) y;
+    }
+
+
+    public boolean isAlive(){
+        return alive;
+    }
+
+    public void setLastDir(int newDir) {
+        this.lastDir = newDir;
     }
 
     public float getX() {
@@ -104,35 +136,5 @@ public abstract class Enemy {
 
     public int getLastDir() {
         return lastDir;
-    }
-
-    public void hurt(int dmg) {
-        this.health-=dmg;
-        if(health <= 0) {
-            alive = false;
-            enemyManager.rewardPlayer(enemyType);
-        }
-    }
-
-    public boolean isAlive(){
-        return alive;
-    }
-
-    public void slow() {
-        slowTick = 0;
-    }
-
-    public boolean isSlowed(){
-        return slowTick < slowTickLimit;
-    }
-
-    public void kill() {
-        //for killing enemy at end of road
-        alive = false;
-        health = 0;
-    }
-
-    public void setLastDir(int newDir) {
-        this.lastDir = newDir;
     }
 }

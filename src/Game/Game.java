@@ -4,7 +4,6 @@ import helpz.LoadSave;
 import managers.TileManager;
 import scenes.*;
 import javax.swing.*;
-import java.awt.image.BufferedImage;
 
 public class Game extends JFrame implements Runnable {
 
