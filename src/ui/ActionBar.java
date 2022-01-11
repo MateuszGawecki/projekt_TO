@@ -131,7 +131,7 @@ public class ActionBar extends Bar{
     private void drawWavesLeftInfo(Graphics g) {
         int current = playing.getWaveManager().getWaveIndex();
         int size = playing.getWaveManager().getWaves().size();
-        g.drawString("Wave: " + (current + 1) + " / " + size, 425,770);
+        g.drawString("Wave: " + current  + " / " + size, 425,770);
     }
 
     private void drawEnemiesLeftInfo(Graphics g) {

@@ -16,6 +16,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import static Game.GameStates.GAME_OVER;
+import static Game.GameStates.SetGameState;
 import static helpz.Constants.Tiles.*;
 
 public class Playing extends GameScene implements SceneMethods{
@@ -92,7 +94,7 @@ public class Playing extends GameScene implements SceneMethods{
 
             //Gold tick
             goldTick++;
-            if(goldTick % (60 * 3) == 0)
+            if(goldTick % (60 * 2) == 0)
                 actionBar.addGold(1);
 
             if(isAllEnemiesDead()){
@@ -104,6 +106,8 @@ public class Playing extends GameScene implements SceneMethods{
                         enemyManager.getEnemies().clear();
                         waveManager.resetEnemyIndex();
                     }
+                }else {
+                    SetGameState(GAME_OVER);
                 }
             }
 

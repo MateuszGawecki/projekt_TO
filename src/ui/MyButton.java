@@ -93,6 +93,10 @@ public class MyButton {
         return id;
     }
 
+    public String getText() {
+        return text;
+    }
+
     public int getX() {
         return x;
     }

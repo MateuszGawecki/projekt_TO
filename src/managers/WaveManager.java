@@ -6,6 +6,9 @@ import scenes.Playing;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static Game.GameDifficultyLvl.GetDifLvl;
+
+
 public class WaveManager {
     private Playing playing;
     private ArrayList<Wave> waves = new ArrayList<>();
@@ -46,8 +49,28 @@ public class WaveManager {
     }
 
     private void createWaves() {
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,1))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2,0,0,0,0,0,0,0,0,1))));
+        int wavesAmount = 10;
+
+        for(int i = 0; i < wavesAmount ; i++){
+            waves.add(generateWave(i));
+        }
+    }
+
+    private Wave generateWave(int enemyAmount) {
+        Integer[] list = new Integer[enemyAmount];
+
+        int lvl = GetDifLvl();
+
+        int type = 0;
+
+        for(int i = 0; i < enemyAmount; i++){
+            list[i] = type % 4;
+            type ++;
+            if(type > lvl)
+                type = 0;
+        }
+
+        return new Wave(new ArrayList<>(Arrays.asList(list)));
     }
 
     public ArrayList<Wave> getWaves(){
