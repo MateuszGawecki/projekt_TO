@@ -17,15 +17,10 @@ public class Editing extends GameScene implements SceneMethods{
 
     private int[][] lvl;
     private ToolBar toolBar;
-
     private PathPoint start,end;
-
     private Tile selectedTile;
-
     private boolean drawSelect;
-
     private int mouseX, mouseY;
-
     private int lastTileX,lastTileY, lastTileID;
 
     public Editing(Game game) {

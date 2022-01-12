@@ -242,7 +242,7 @@ public class ActionBar extends Bar{
     }
 
     private void sellTowerClicked() {
-        playing.removeTover(displayedTower);
+        playing.removeTower(displayedTower);
 
         int upgradeCost = (displayedTower.getTier() -1) * getUpgradeAmount();
         upgradeCost *= 0.5f;

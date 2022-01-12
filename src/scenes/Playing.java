@@ -25,16 +25,12 @@ public class Playing extends GameScene implements SceneMethods{
     private int[][] lvl;
     private ActionBar actionBar;
     private PathPoint start,end;
-
     private int mouseX, mouseY;
-
     private EnemyManager enemyManager;
     private TowerManager towerManager;
     private ProjectileManager projectileManager;
     private WaveManager waveManager;
-
     private Tower selectedTower;
-
     private int goldTick;
     private boolean gamePaused;
 
@@ -55,11 +51,12 @@ public class Playing extends GameScene implements SceneMethods{
         return waveManager;
     }
 
-    private void loadDefaultLevel() {
-        lvl = LoadSave.GetLevelData("new level");
-        ArrayList<PathPoint> points = LoadSave.GetLevelPathPoints("new level");
-        start = points.get(0);
-        end = points.get(1);
+    public TowerManager getTowerManager(){
+        return towerManager;
+    }
+
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
     }
 
     @Override
@@ -72,16 +69,6 @@ public class Playing extends GameScene implements SceneMethods{
         projectileManager.draw(g);
         drawSelectedTower(g);
         drawHighLight(g);
-    }
-
-    private void drawHighLight(Graphics g) {
-        g.setColor(Color.WHITE);
-        g.drawRect(mouseX,mouseY,32,32);
-    }
-
-    private void drawSelectedTower(Graphics g) {
-        if(selectedTower != null)
-            g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX,mouseY ,null);
     }
 
     public void update(){
@@ -115,6 +102,89 @@ public class Playing extends GameScene implements SceneMethods{
                 spawnEnemy();
             }
         }
+    }
+
+    public void setLevel(int[][] lvl){
+        this.lvl = lvl;
+    }
+
+    public void rewardPlayer(int enemyType){
+        actionBar.addGold(Constants.Enemies.GetReward(enemyType));
+    }
+
+    public void setGamePaused(boolean gamePaused){
+        this.gamePaused = gamePaused;
+    }
+
+    public boolean isGamePaused(){
+        return gamePaused;
+    }
+
+    public void setSelectedTower(Tower selectedTower) {
+        this.selectedTower = selectedTower;
+    }
+
+    public void shootEnemy(Enemy e, Tower t) {
+        projectileManager.newProjectile(t,e);
+    }
+
+    public void removeTower(Tower displayedTower) {
+        towerManager.removeTower(displayedTower);
+    }
+
+    public void upgradeTower(Tower displayedTower) {
+        towerManager.upgradeTower(displayedTower);
+    }
+
+    public void removeOneLife() {
+        actionBar.removeOneLife();
+    }
+
+    public void resetEverything() {
+        actionBar.resetEverything();
+        enemyManager.reset();
+        towerManager.reset();
+        waveManager.reset();
+        projectileManager.reset();
+
+        mouseX = 0;
+        mouseY = 0;
+        selectedTower = null;
+        goldTick = 0;
+        gamePaused = false;
+    }
+
+    private void removeGold(int towerType) {
+        actionBar.payForTower(towerType);
+    }
+
+    private Tower getTowerAt(int mouseX, int mouseY) {
+        return towerManager.getTowerAt(mouseX,mouseY);
+    }
+
+    private boolean isTileGrass(int x, int y) {
+        int id = lvl[y/32][x/32];
+
+        int tileType = getGame().getTileManager().getTile(id).getTileType();
+
+        return tileType == GRASS_TILE;
+    }
+
+    private void loadDefaultLevel() {
+        lvl = LoadSave.GetLevelData("new level");
+        ArrayList<PathPoint> points = LoadSave.GetLevelPathPoints("new level");
+        start = points.get(0);
+        end = points.get(1);
+    }
+
+    private void drawHighLight(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.drawRect(mouseX,mouseY,32,32);
+    }
+
+    private void drawSelectedTower(Graphics g) {
+        if(selectedTower != null)
+            g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX,mouseY ,null);
     }
 
     private boolean isWaveTimerOver() {
@@ -158,94 +228,6 @@ public class Playing extends GameScene implements SceneMethods{
                     g.drawImage(getSprite(id), x *32,y *32,null);
             }
         }
-    }
-
-    public void setLevel(int[][] lvl){
-        this.lvl = lvl;
-    }
-
-    public int getTileType(int x, int y){
-        int xCord = x/32;
-        int yCord = y/32;
-
-        if(xCord < 0 || xCord > 19)
-            return 0;
-
-        if(yCord < 0 || yCord > 19)
-            return 0;
-
-        int id = lvl[yCord][xCord];
-        return getGame().getTileManager().getTile(id).getTileType();
-    }
-
-    public TowerManager getTowerManager(){
-        return towerManager;
-    }
-
-    public void rewardPlayer(int enemyType){
-        actionBar.addGold(Constants.Enemies.GetReward(enemyType));
-    }
-
-    private void removeGold(int towerType) {
-        actionBar.payForTower(towerType);
-    }
-
-    private Tower getTowerAt(int mouseX, int mouseY) {
-        return towerManager.getTowerAt(mouseX,mouseY);
-    }
-
-    private boolean isTileGrass(int x, int y) {
-        int id = lvl[y/32][x/32];
-
-        int tileType = getGame().getTileManager().getTile(id).getTileType();
-
-        return tileType == GRASS_TILE;
-    }
-
-    public void setGamePaused(boolean gamePaused){
-        this.gamePaused = gamePaused;
-    }
-
-    public boolean isGamePaused(){
-        return gamePaused;
-    }
-
-    public void setSelectedTower(Tower selectedTower) {
-        this.selectedTower = selectedTower;
-    }
-
-    public EnemyManager getEnemyManager() {
-        return enemyManager;
-    }
-
-    public void shootEnemy(Enemy e, Tower t) {
-        projectileManager.newProjectile(t,e);
-    }
-
-    public void removeTover(Tower displayedTower) {
-        towerManager.removeTower(displayedTower);
-    }
-
-    public void upgradeTower(Tower displayedTower) {
-        towerManager.upgradeTower(displayedTower);
-    }
-
-    public void removeOneLife() {
-        actionBar.removeOneLife();
-    }
-
-    public void resetEverything() {
-        actionBar.resetEverything();
-        enemyManager.reset();
-        towerManager.reset();
-        waveManager.reset();
-        projectileManager.reset();
-
-        mouseX = 0;
-        mouseY = 0;
-        selectedTower = null;
-        goldTick = 0;
-        gamePaused = false;
     }
 
     @Override
